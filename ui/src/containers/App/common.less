@@ -1,0 +1,92 @@
+
+@import "./ionicons/less/ionicons.less";
+
+.txtCentered{
+  text-align: center;
+  width:100%;
+  font-size:25px;
+  color:grey;
+  font-weight: 100;
+}
+.centered {
+  margin: auto;
+  display: block;
+}
+.roundInput{
+  border-radius: 12px;
+  border:1px solid #ccc;
+  background:#eee;
+  width:170px;
+  height:28px;
+  font-size: 22px;
+  text-align: center;
+}
+
+@font-face {
+  font-family: "ssfd-reg";
+  src: url("./ssfd/ssfd-reg.ttf?v=2.0.0") format("truetype"),
+  url("./ssfd/ssfd-reg.woff?v=2.0.0") format("woff");
+  font-weight: normal; font-style: normal; }
+
+.Regular {
+  font-family: 'ssfd-reg';
+}
+
+@font-face {
+  font-family: "ssfd-thin";
+  src: url("./ssfd/ssfd-thin.ttf?v=2.0.0") format("truetype"),
+  url("./ssfd/ssfd-thin.woff?v=2.0.0") format("woff");
+  font-weight: normal; font-style: normal; }
+
+.Thin {
+  font-family: 'ssfd-thin';
+}
+
+@font-face {
+  font-family: "ssfd-ulthin";
+  src: url("./ssfd/ssfd-ulthin.ttf") format("truetype"),
+  url("./ssfd/ssfd-ulthin.woff") format("woff");
+  font-weight: normal; font-style: normal; }
+
+.UltraThin {
+  font-family: 'ssfd-ulthin';
+}
+*{
+  font-family: "ssfd-thin";
+  color:#797373;
+}
+.lightGrey{
+  color:#B8B8B8;
+}
+.darkGrey{
+  color:#5C5C5C;
+}
+body {
+  margin:0px;
+}
+#root section{
+  height: 100%;
+  //min-height: 500px;
+  //position: relative;
+}
+.topLeft{
+  position:absolute;
+  top:18px;
+  left:20px;
+  font-size:20px;
+  i{
+    color:#DB4A41;
+  }
+}
+.topRight{
+  position:absolute;
+  top:18px;
+  right:20px;
+  font-size:20px;
+  i{
+    color:#DB4A41;
+  }
+}
+input{
+  outline: 0 !important;
+}

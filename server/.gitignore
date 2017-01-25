@@ -1,0 +1,6 @@
+node_modules
+public/bower_components
+public/dist
+public/uploads
+logs/*.log
+server/config/env

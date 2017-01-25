@@ -1,0 +1,48 @@
+
+.addEvent{
+  @media (max-height: 400px){
+    .txtCentered{
+      display: none;
+    }
+    .enterCode{
+      margin: 20px 0px !important;
+    }
+  }
+  .txtCentered{
+    margin-top:50px;
+  }
+  .enterCode{
+    text-align: center;
+    width: 100%;
+    margin: 40px 0px;
+
+    span{
+      font-size: 23px;
+      margin-right:5px;
+    }
+    .roundInput{
+      border:1px solid #DB4A41;
+    }
+  }
+  .button{
+    -webkit-border-radius: 23px;
+    -moz-border-radius: 23px;
+    border-radius: 23px;
+
+    margin-bottom: 15px;
+    width:60%;
+    padding: 5px 0px;
+    font-size:24px;
+    left:20%;
+    border:0px;
+    position:relative;
+    &.submit{
+      background: #DB4A41;
+      color:white;
+    }
+    &.scan{
+      background:rgba(0,0,0,0);
+      border: 1px solid #DB4A41;
+    }
+  }
+}

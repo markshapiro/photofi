@@ -1,0 +1,50 @@
+.footer{
+  background: #DB4A41;
+  width:100%;
+  bottom:0px;
+  left:0px;
+  position:absolute;
+  height:50px;
+  @media (max-height: 320px){
+    display:none;
+  }
+  .option{
+    width:25%;
+    position:relative;
+    height:100%;
+    display:inline-block;
+    text-align: center;
+    i{
+      font-size:34px;
+      color:white;
+    }
+    img{
+      margin: auto;
+      margin-top: 7px;
+      margin-bottom: 2.5px;
+      height:24px;
+    }
+    div{
+      font-size:11px;
+      color:white;
+    }
+    .pressed{
+      display:none;
+    }
+    &.active{
+      .normal{
+        display:none;
+      }
+      .pressed{
+        display:block !important;
+      }
+    }
+  }
+  .feedOption{
+    vertical-align: top;
+
+  }
+  a{
+    text-decoration: none !important;
+  }
+}

@@ -1,0 +1,80 @@
+.logIn {
+  padding-top:50px;
+  height: 100%;
+  min-height: 270px;
+  position: relative;
+  box-sizing: border-box;
+  @media (max-height: 400px){
+    padding-top:20px;
+    .title, .logo2{
+      display: none;
+    }
+    .topLeft{
+      top:5px;
+    }
+  }
+  .title{
+    font-size:36px;
+  }
+  .logo{
+    max-width:210px;
+  }
+  .logo2{
+    width:50px;
+    margin-bottom:10px;
+  }
+  .lower{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    width:100%;
+    .wlcm{
+      margin-bottom:20px;
+      font-size:32px;
+    }
+    .button {
+      background: #DB4A41;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      color: white;
+      width: 84%;
+      padding: 10px 0px;
+      font-size: 26px;
+      border: 0px;
+      position:relative;
+      left:8%;
+      -webkit-box-shadow: 0px 29px 33px -20px rgba(219, 74, 65, 1);
+      -moz-box-shadow: 0px 29px 33px -20px rgba(219, 74, 65, 1);
+      box-shadow: 0px 29px 33px -20px rgba(219, 74, 65, 1);
+      &.raise{
+        bottom:30px;
+      }
+    }
+    .signInLbl{
+      margin:25px 0px;
+      font-size:19px;
+    }
+  }
+  .input {
+    border: 1px solid #ccc;
+    border-width: 0px 0px 1px 0px;
+    margin-top: 10px;
+    position: relative;
+    left: 8%;
+    width: 84%;
+    input {
+      font-size: 20px;
+      border: 0px;
+      width: 90%;
+      height:45px;
+    }
+    i {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: grey;
+    }
+  }
+}

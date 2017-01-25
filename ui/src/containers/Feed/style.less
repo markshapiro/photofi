@@ -1,0 +1,57 @@
+.feed{
+  .title{
+    border-bottom: 1px solid #D7D7D7;
+    line-height:50px;
+    font-size:23px;
+  }
+  .flipper{
+    margin-top:10px;
+    height:30px;
+  }
+  .photos{
+    position:absolute;
+    top:160px;
+    left:0px;
+    bottom:70px;
+    width:100%;
+    overflow-y:scroll;
+    border-top: 1px solid #D7D7D7;
+    -webkit-overflow-scrolling: touch;
+    .square{
+      width:25%;
+      border:3px solid white;
+      box-sizing: border-box;
+    }
+    .list{
+      width:100%;
+      border-bottom:4px solid white;
+    }
+  }
+  .imgEnlarge{
+    position:absolute;
+    top:0px;
+    left:0px;
+    bottom: 0px;
+    right:0px;
+    background: rgba(0,0,0,0.7);
+    text-align: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 97%;
+    opacity:0;
+    transition: opacity 0.2s linear;
+    -webkit-transition: opacity 0.2s linear;
+    z-index:-1;
+    &.showing{
+      z-index:1;
+      opacity:1;
+    }
+    .ion-share{
+      position: absolute;
+      right:5px;
+      top:-5px;
+      font-size:50px;
+      color:white;
+    }
+  }
+}

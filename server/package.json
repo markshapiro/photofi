@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "body-parser": "^1.16.0",
-    "cloudinary": "^1.5.0",
     "compression": "^1.5.2",
     "connect-flash": "^0.1.1",
     "connect-mongo": "latest",

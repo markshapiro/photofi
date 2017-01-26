@@ -14,12 +14,10 @@ module.exports = function(app) {
     app.route('/events/:eventCode')
         .get(
             auth.requiresLogin(),
-            eventController.get);
-
-    app.route('/events/:eventCode/addPhotos')
-        .post(
+            eventController.get)
+        .put(
             auth.requiresLogin(true),
-            eventController.addPhotos)
+            eventController.update);
 
     app.route('/events')
         .get(
@@ -29,30 +27,19 @@ module.exports = function(app) {
             auth.requiresLogin(true),
             eventController.create);
 
-    app.route('/events/:eventCode/star/:phid')
+    app.route('/eventsPhoto')
         .post(
             auth.requiresLogin(true),
-            eventController.starPhoto);
-
-    app.route('/events/:eventCode/delete/:phid')
-        .post(
-            auth.requiresLogin(true),
-            eventController.deletePhoto);
+            eventController.eventsPhoto);
 
     app.route('/bookEvent')
         .post(
         auth.requiresLogin(),
         eventController.bookEvent);
 
-    app.route('/getTempUploadCredentials')
-        .get(
-            auth.requiresLogin(),
-            eventController.getTempUploadCredentials);
-
-
-
-
-    app.route('/test')
+    app.route('/uploadImage')
         .post(
         eventController.uploadImage);
+
+    app.param('eventCode',eventController.getEventByCode);
 };

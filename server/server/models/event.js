@@ -16,25 +16,7 @@ var EventSchema = new Schema({
         maxlength: 10,
         required: true
     },
-    "photos":[
-        {
-            phid:{
-                type: String,
-                maxlength: 30,
-                required: true
-            },
-            created: {
-                type: Date,
-                required: false,
-                default: Date.now
-            }
-        }
-    ],
-    "starred": {
-        type: String,
-        maxlength: 30,
-        default:""
-    },
+    "starred": Schema.Types.Mixed,
     created: {
         type: Date,
         required: false,

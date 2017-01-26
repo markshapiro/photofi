@@ -14,10 +14,10 @@ import { bindAllActionCreators } from 'actions/utils';
 
 export default function (store) {
   const actions = bindAllActionCreators(actionCreators, store.dispatch);
-  return <Route path="/" component={App}  onEnter={()=>actions.auth.tryLogIn()}>
+  return <Route path="/" component={App} onEnter={()=>actions.auth.tryLogIn()}>
     <IndexRoute component={LogIn}/>
     <Route path="addevent" component={AddEvent}/>
-    <Route path="feed" component={Feed} onEnter={()=>actions.events.loadEvent()}/>
+    <Route path="feed" component={Feed} onEnter={()=>actions.events.loadNextPhotos()}/>
     <Route path="events" component={Events} onEnter={()=>actions.events.getPastEvents()}/>
     <Route path="bookevent" component={BookEvent} />
     <Route status={404} path="*" component={LogIn} />

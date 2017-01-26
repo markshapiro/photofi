@@ -1,7 +1,7 @@
 {
-  "name": "redux-easy-boilerplate",
-  "version": "2.1.0",
-  "description": "Start your project easy and fast with modern tools",
+  "name": "",
+  "version": "0.0.0",
+  "description": "",
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
@@ -12,31 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anorudes/redux-easy-boilerplate.git"
+    "url": ""
   },
-  "homepage": "http://anorudes.github.io/redux-easy-boilerplate/",
-  "bugs": "https://github.com/anorudes/redux-easy-boilerplate/issues",
-  "keywords": [
-    "react",
-    "reactjs",
-    "babel6",
-    "boilerplate",
-    "redux",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
-  "license": "MIT",
-  "authors": [
-    "Max Anoru (https://github.com/anorudes)",
-    "Andrey Keske (https://github.com/keske)"
-  ],
-  "contributors": [
-    "Ollipekka Jalonen (https://github.com/inertum)"
-  ],
+  "keywords": [],
+  "license": "",
+  "authors": [],
+  "contributors": [],
   "devDependencies": {
     "autoprefixer": "6.3.1",
     "babel-core": "^6.4.5",
@@ -94,7 +75,8 @@
     "webpack-hot-middleware": "^2.6.0",
     "webpack-merge": "^0.7.3",
     "axios": "^0.15.3",
-    "babel-plugin-transform-object-assign": "^6.5.0"
+    "babel-plugin-transform-object-assign": "^6.5.0",
+    "flickrapi": "^0.6.0"
   },
   "dependencies": {
     "react": "^0.14.6",

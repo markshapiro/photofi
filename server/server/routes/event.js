@@ -12,9 +12,6 @@ module.exports = function(app) {
             eventController.add);
 
     app.route('/events/:eventCode')
-        .get(
-            auth.requiresLogin(),
-            eventController.get)
         .put(
             auth.requiresLogin(true),
             eventController.update);

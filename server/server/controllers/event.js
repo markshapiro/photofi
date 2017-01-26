@@ -26,10 +26,6 @@ module.exports.add = function(req, res){
         });
 };
 
-module.exports.get = function(req, res){
-    res.send(req.event)
-};
-
 module.exports.create = function(req, res){
     (new Event(req.body))
         .save()

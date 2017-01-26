@@ -4,24 +4,15 @@ import { routeActions } from 'redux-simple-router';
 
 export function goToEvent(code) {
     return dispatch => {
-        dispatch(createAction("SET_EVENT_FEED_CODE", { code }));
-        dispatch(routeActions.push(`/feed`));
-    };
-}
-
-export function loadEvent() {
-    return (dispatch, getState) => {
-        if(!getState().events.code){
-            return dispatch(routeActions.push(`/addevent`));
-        }
-        api.getEvent(getState().events.code)
-            .then(result => {
-                dispatch(createAction("SET_EVENT", { event: result.data }));
+        api.addEvent(getState().events.code)
+            .then(event => {
+                dispatch(createAction("SET_EVENT", { event }));
+                dispatch(routeActions.push(`/feed`));
             })
             .catch(error => {
                 dispatch(routeActions.push(`/addevent`));
             });
-    }
+    };
 }
 
 export function getPastEvents() {
@@ -32,5 +23,15 @@ export function getPastEvents() {
             })
             .catch(error => {
             });
+    }
+}
+
+export function loadNextPhotos() {
+    return (dispatch, getState) => {
+
+        api.loadNextPhotos()
+
+
+        dispatch(createAction("ADD_PHOTOS", []));
     }
 }

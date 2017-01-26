@@ -29,10 +29,11 @@ export class Feed extends Component {
   }
 
   refresh(){
+    this.props.loadNextPhotos();
   }
 
   render() {
-    const {event} = this.props;
+    const {photos, event} = this.props;
     return (
         <div className="feed">
           <div className="txtCentered title">{event && event.name}</div>
@@ -40,7 +41,7 @@ export class Feed extends Component {
                className="centered flipper"
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
-            {event && event.photos.map(({url})=><img onClick={()=>this.showImage(url)} className={this.state.showGrid?"square":"list"} src={this.getUrlByGridType(url)}/>)}
+            {photos && photos.map(({url})=><img onClick={()=>this.showImage(url)} className={this.state.showGrid?"square":"list"} src={this.getUrlByGridType(url)}/>)}
           </div>
          <div className={"imgEnlarge "+(this.state.showingImg && "showing")}
               style={{'backgroundImage':'url('+this.state.showingImg+')'}}

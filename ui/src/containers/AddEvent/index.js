@@ -18,6 +18,19 @@ export class AddEvent extends Component {
     this.state={
       code:""
     };
+
+
+
+    setTimeout(()=>{
+
+      this.props.loadNextPhotos();
+
+    }, 500)
+
+
+
+
+
   }
   render() {
     return (

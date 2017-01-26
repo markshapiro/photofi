@@ -109,6 +109,10 @@ module.exports.uploadImage=function(req, res){
         if(err) {
             return console.error(err);
         }
+        if(!result.length){
+            logger.error("could not upload picture");
+            return res.status(500).send({message:"could not upload picture"});
+        }
         res.send(result);
     });
 };

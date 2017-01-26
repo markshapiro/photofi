@@ -34,12 +34,12 @@ module.exports = function(app) {
 
     app.route('/bookEvent')
         .post(
-        auth.requiresLogin(),
-        eventController.bookEvent);
+            auth.requiresLogin(),
+            eventController.bookEvent);
 
     app.route('/uploadImage')
         .post(
-        eventController.uploadImage);
+            eventController.uploadImage);
 
     app.param('eventCode',eventController.getEventByCode);
 };

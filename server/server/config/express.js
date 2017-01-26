@@ -25,7 +25,7 @@ module.exports = function(app, dbConn) {
 
     app.use(global.cookieParser)
 
-    app.use(require('body-parser').json({limit: '1mb'}));
+    app.use(require('body-parser').json({limit:'1mb'}));
 
     app.use(require('method-override')())
 

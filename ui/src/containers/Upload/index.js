@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-//import { default as swal } from 'sweetalert2'
-
 require('./style.less');
 
 /* actions */
@@ -17,13 +15,6 @@ export class Upload extends Component {
     constructor(props){
         super(props);
         this.state={};
-
-        //swal({
-        //    title: 'Error!',
-        //    text: 'Do you want to continue',
-        //    type: 'error',
-        //    confirmButtonText: 'Cool'
-        //})
     }
     render() {
         return (

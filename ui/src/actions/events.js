@@ -5,7 +5,7 @@ import Q from 'q';
 
 export function addEvent(code) {
     return dispatch => {
-        api.addEvent(code)
+        api.addEvent(code.toLowerCase())
             .then(result => dispatch(setEvent(result.data)))
             .catch(error => dispatch(routeActions.push(`/addevent`)));
     };
@@ -41,8 +41,15 @@ export function loadFromCamera() {
 
 export function uploadCameraPhotos() {
     return (dispatch, getState) => {
-        const photos = ["http://www.fnordware.com/superpng/pnggrad8rgb.png", "http://www.fnordware.com/superpng/pnggrad8rgb.png"];
-        //const photos = getState().events.cameraPhotos;
+        //var some = [
+        //    "http://www.fnordware.com/superpng/pnggrad8rgb.png",
+        //    "http://www.techinsights.com/uploadedImages/Public_Website/Content_-_Primary/Teardowncom/Sample_Reports/sample-icon.png",
+        //    "http://www.wakarusachamber.com/images/400X200.gif",
+        //    "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg",
+        //    "http://thebest3d.com/pdp/landscape200x500.jpg"
+        //];
+        //const photos = [ some[Math.floor(some.length*Math.random())]  ];
+        const photos = getState().events.cameraPhotos;
         Q.all(photos.map(url=>cropImage(url)
                 .then(data=>api.upload(getState().events.event.code, data))
                 .then(()=>{

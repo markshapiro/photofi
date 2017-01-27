@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 require('./common.less');
-require('sweetalert2/src/sweetalert2.scss')
 
 /* actions */
 import * as actionCreators from 'actions/auth';

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import Q from 'q';
-require("flickrapi/browser/flickrapi.dev.js")
+require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://localhost:4000";
 //const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
-const flashAirPrefix = "http://localhost:5000";
-//const flashAirPrefix = "http://flashair";
+const flashAirPrefix = "http://flashair";
+//const flashAirPrefix = "http://localhost:5000";
 
 export function login(data) {
   return axios.post(prefix + '/api/user/login', data);
@@ -35,7 +35,6 @@ export function bookEvent(data) {
 export function upload(code, data) {
   return axios.post(prefix + '/api/uploadImage',{eventCode:code, data:data});
 }
-
 
 export function loadNextPhotos(code, date) {
   var prom = Q.defer();

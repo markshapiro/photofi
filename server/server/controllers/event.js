@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
     config = require(global.root + '/server/config/config');
 
 module.exports.add = function(req, res){
+    /*
     User.findOne({_id:req.user._id})
         .then(user=>{
             if(!user.events.filter(d=>d.code===req.params.eventCode).length){
@@ -24,15 +25,32 @@ module.exports.add = function(req, res){
             logger.error(err);
             return res.status(500).send(err);
         });
+    */
+        var prom = Q();
+        if(!req.user.events.filter(d=>d.code===req.params.eventCode).length){
+            req.user.events.push({code:req.params.eventCode});
+            prom = req.user.save()
+        }
+        prom.then(()=>res.send(req.event))
+        .catch(err=>{
+            logger.error(err);
+            return res.status(500).send(err);
+        });
 };
 
 module.exports.create = function(req, res){
+    //(new Event(req.body))
+    //    .save()
+    //    .then(()=>User.findOne({_id: req.user._id}))
+    //    .then(user=>{
+    //        user.events.push({code: req.body.code});
+    //        return user.save()
+    //    })
     (new Event(req.body))
         .save()
-        .then(()=>User.findOne({_id: req.user._id}))
-        .then(user=>{
-            user.events.push({code: req.body.code});
-            return user.save()
+        .then(()=>{
+            req.user.events.push({code: req.body.code});
+            return req.user.save()
         })
         .then(()=>res.send({}))
         .catch(err=>{

@@ -74,8 +74,16 @@ module.exports.eventsPhoto = function(req, res){
 };
 
 module.exports.list = function(req, res){
-    User.findOne({_id:req.user._id}, '-salt -hashed_password')
-        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
+
+    //User.findOne({_id:req.user._id}, '-salt -hashed_password')
+    //    .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
+    //    .then(events=>res.send(events))
+    //    .catch(err=>{
+    //        logger.error(err);
+    //        return res.status(500).send(err);
+    //    });
+
+    Event.find({code:{$in:req.user.events.map(d=>d.code)}})
         .then(events=>res.send(events))
         .catch(err=>{
             logger.error(err);

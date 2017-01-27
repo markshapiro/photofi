@@ -36,12 +36,12 @@ export class Feed extends Component {
     const {photos, event} = this.props;
     return (
         <div className="feed">
-          <div className="txtCentered title">{event && event.name}</div>
+          <div className="txtCentered title">{event.name}</div>
           <img onClick={()=>this.toggleViewType()}
                className="centered flipper"
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
-            {photos && photos.map((url, ind)=>{
+            {photos.map((url, ind)=>{
               return <img
                   key={ind}
                   onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}

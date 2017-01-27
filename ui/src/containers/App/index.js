@@ -11,6 +11,16 @@ const titles = {
   '/upload':'Upload'
 };
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+/* actions */
+import * as actionCreators from 'actions/auth';
+
+@connect(
+        state => state.auth,
+        dispatch => bindActionCreators(actionCreators, dispatch)
+)
 export class App extends Component {
   static propTypes = {
     children: React.PropTypes.any
@@ -22,7 +32,7 @@ export class App extends Component {
       <section>
         {title && <Header hideBackBtn={this.props.location.pathname==='/events'} onLeftClick={()=>this.props.history.goBack()} title={title} />}
         {this.props.children}
-        {title && <Footer titles={titles}/>}
+        {title && <Footer titles={titles} user={this.props.user}/>}
       </section>
     );
   }

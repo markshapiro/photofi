@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const initialState = {
-    event:null,
+    event:{},
     events:[],
     photos:[],
     lastFetchTime:0

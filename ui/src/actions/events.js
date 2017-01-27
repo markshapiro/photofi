@@ -21,7 +21,6 @@ export function getPastEvents() {
     return dispatch => {
         api.events()
             .then(result => dispatch(createAction("SET_PAST_EVENTS", {events: result.data})))
-            .catch(error => {});
     };
 }
 

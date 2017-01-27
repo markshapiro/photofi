@@ -19,7 +19,7 @@ var EventSchema = new Schema({
     "starred": {
         type: String,
         maxlength: 100,
-        default:""
+        default:null
     },
     created: {
         type: Date,

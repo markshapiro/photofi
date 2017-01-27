@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-require('./common.less');
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+require('./common.less');
+require('sweetalert2/src/sweetalert2.scss')
+
+/* actions */
+import * as actionCreators from 'actions/auth';
 
 const titles = {
   '/feed':'Feed',
@@ -10,12 +18,6 @@ const titles = {
   '/bookevent':'Book event',
   '/upload':'Upload'
 };
-
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-/* actions */
-import * as actionCreators from 'actions/auth';
 
 @connect(
         state => state.auth,

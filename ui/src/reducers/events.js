@@ -4,7 +4,8 @@ const initialState = {
     event:{},
     events:[],
     photos:[],
-    lastFetchTime:0
+    lastFetchTime:0,
+    cameraPhotos:[]
 };
 
 export function events(state = initialState, action) {
@@ -21,10 +22,14 @@ export function events(state = initialState, action) {
               state, {
                   events: action.payload.events
               });
+      case "SET_CAMERA_PHOTOS":
+          return Object.assign({},
+              state, {
+                  cameraPhotos: action.payload
+              });
       case "ADD_PHOTOS":
           return Object.assign({},
               state, {
-                  //photos: state.photos.concat(action.payload.map(d=>d.url)),
                   photos: _.uniqBy(action.payload.concat(state.photos), p=>p.id),
                   lastFetchTime: action.payload.length
                       ? Number(action.payload[0].dateupload)+1

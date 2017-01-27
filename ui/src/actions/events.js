@@ -1,6 +1,7 @@
-import { createAction } from './utils';
+import { createAction, cropImage } from './utils';
 import * as api from '../api';
 import { routeActions } from 'redux-simple-router';
+import Q from 'q';
 
 export function addEvent(code) {
     return dispatch => {
@@ -28,5 +29,26 @@ export function loadNextPhotos() {
     return (dispatch, getState) => {
         api.loadNextPhotos(getState().events.event.code, getState().events.lastFetchTime)
             .then(photos=>dispatch(createAction("ADD_PHOTOS", photos)))
+    }
+}
+
+export function loadFromCamera() {
+    return dispatch => {
+        api.loadPicsFromCamera()
+            .then(rawPhotos=>dispatch(createAction("SET_CAMERA_PHOTOS", rawPhotos)))
+    }
+}
+
+export function uploadCameraPhotos() {
+    return (dispatch, getState) => {
+        const photos = ["http://www.fnordware.com/superpng/pnggrad8rgb.png", "http://www.fnordware.com/superpng/pnggrad8rgb.png"];
+        //const photos = getState().events.cameraPhotos;
+        Q.all(photos.map(url=>cropImage(url)
+                .then(data=>api.upload(getState().events.event.code, data))
+                .then(()=>{
+
+                })
+        ))
+        .then(()=>createAction("SET_CAMERA_PHOTOS", []))
     }
 }

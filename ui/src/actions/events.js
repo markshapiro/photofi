@@ -48,7 +48,22 @@ export function uploadCameraPhotos() {
                 .then(()=>{
 
                 })
+                .catch(()=>{
+                    alert("upload fail")
+                })
         ))
-        .then(()=>createAction("SET_CAMERA_PHOTOS", []))
+        .then(()=>{
+
+                alert("uploaded successfuly")
+                createAction("SET_CAMERA_PHOTOS", [])
+            })
+    }
+}
+
+export function checkIfHasEvent() {
+    return (dispatch, getState) => {
+        if(!getState().events.event || !getState().events.event.code){
+            dispatch(routeActions.push(`/addevent`))
+        }
     }
 }

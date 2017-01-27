@@ -18,10 +18,10 @@ export default function (store) {
   return <Route path="/" component={App} onEnter={()=>actions.auth.tryLogIn()}>
     <IndexRoute component={LogIn}/>
     <Route path="addevent" component={AddEvent}/>
-    <Route path="feed" component={Feed} onEnter={()=>actions.events.loadNextPhotos()}/>
+    <Route path="feed" component={Feed} onEnter={()=>{actions.events.checkIfHasEvent();}}/>
     <Route path="events" component={Events} onEnter={()=>actions.events.getPastEvents()}/>
     <Route path="bookevent" component={BookEvent} />
-    <Route path="upload" component={Upload} />
+    <Route path="upload" component={Upload} onEnter={()=>actions.events.checkIfHasEvent()}/>
     <Route status={404} path="*" component={LogIn} />
   </Route>;
 }

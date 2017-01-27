@@ -21,7 +21,8 @@ export class Feed extends Component {
 
   componentWillMount(){
     this.toggleViewType();
-    this.refreshInterval = setInterval(this.refresh.bind(this), 4000)
+    this.refreshInterval = setInterval(this.refresh.bind(this), 4000);
+    this.props.loadNextPhotos();
   }
 
   componentWillUnmount(){

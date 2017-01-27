@@ -1,4 +1,5 @@
 import { bindActionCreators } from 'redux';
+import Q from 'q';
 
 export const createAction = (type, payload) => {
   return { type, payload };

@@ -19,8 +19,6 @@ module.exports = function(app, dbConn) {
         level: 9
     }));
 
-    app.use('/',express.static(global.root + '/public'));
-
     global.cookieParser=require('cookie-parser')(config.session.secret);
 
     app.use(global.cookieParser)

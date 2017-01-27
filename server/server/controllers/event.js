@@ -19,7 +19,7 @@ module.exports.add = function(req, res){
                 return user.save()
             }
         })
-        .then(()=>res.send({}))
+        .then(()=>res.send(req.event))
         .catch(err=>{
             logger.error(err);
             return res.status(500).send(err);
@@ -57,7 +57,7 @@ module.exports.eventsPhoto = function(req, res){
 
 module.exports.list = function(req, res){
     User.findOne({_id:req.user._id}, '-salt -hashed_password')
-        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}, {code:1, name:1, starred:1}))
+        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
         .then(events=>res.send(events))
         .catch(err=>{
             logger.error(err);

@@ -9,9 +9,7 @@ export function login(data) {
                 dispatch(createAction("LOGIN_SUCCES"));
                 dispatch(routeActions.push(`/addevent`));
             })
-            .catch(error => {
-                dispatch(createAction("LOGIN_FAILURE", { error }));
-            });
+            .catch(error => dispatch(createAction("LOGIN_FAILURE", { error })));
     };
 }
 
@@ -22,9 +20,7 @@ export function register(data) {
                 dispatch(createAction("REGISTER_SUCCES"));
                 dispatch(routeActions.push(`/addevent`));
             })
-            .catch(error => {
-                dispatch(createAction("REGISTER_FAILURE", { error }));
-            });
+            .catch(error => dispatch(createAction("REGISTER_FAILURE", { error })));
     };
 }
 

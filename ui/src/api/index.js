@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
 const prefix = "http://localhost:4000";
@@ -17,7 +18,7 @@ export function register(data) {
 }
 
 export function addEvent(code) {
-  return axios.get(prefix + '/api/'+code+'/add');
+  return axios.post(prefix + '/api/events/'+code+'/add');
 }
 
 export function getEvent(code) {
@@ -28,14 +29,19 @@ export function bookEvent(data) {
   return axios.post(prefix + '/api/bookevent',data);
 }
 
-export function loadNextPhotos(code, tags, date) {
+export function loadNextPhotos(code, date) {
+  var prom = Q.defer();
   var flickr = new Flickr({
     api_key: "817677ed2b6d78b3e496dc06e3366f29"
   });
   flickr.photos.search({
     user_id:"150312554@N02",
-    tags:"eventCode"
+    tags:code
   }, function(err, result) {
-    console.log(result)
+    if(!err){
+      return prom.resolve(result.photos.photo)
+    }
+    prom.reject(err)
   });
+  return prom.promise
 }

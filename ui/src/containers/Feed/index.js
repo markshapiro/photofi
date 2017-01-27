@@ -21,7 +21,7 @@ export class Feed extends Component {
 
   componentWillMount(){
     this.toggleViewType();
-    this.refreshInterval = setInterval(this.refresh, 4000)
+    this.refreshInterval = setInterval(this.refresh.bind(this), 4000)
   }
 
   componentWillUnmount(){
@@ -41,7 +41,13 @@ export class Feed extends Component {
                className="centered flipper"
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
-            {photos && photos.map(({url})=><img onClick={()=>this.showImage(url)} className={this.state.showGrid?"square":"list"} src={this.getUrlByGridType(url)}/>)}
+            {photos && photos.map(data=>{
+
+              console.log(data)
+
+
+              return <img onClick={()=>this.showImage(data)} className={this.state.showGrid?"square":"list"} />
+            })}
           </div>
          <div className={"imgEnlarge "+(this.state.showingImg && "showing")}
               style={{'backgroundImage':'url('+this.state.showingImg+')'}}

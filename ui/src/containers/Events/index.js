@@ -28,9 +28,9 @@ export class Events extends Component {
                 </div>
 
                 <div className="eventsScroller">
-                    {this.props.events && this.props.events.filter(ev=>ev.name.indexOf(this.state.key)>=0).map(({starred,name,code})=>
-                        <div className="evRow" onClick={()=>this.props.goToEvent(code)}>
-                            <img src={starred} />
+                    {this.props.events && this.props.events.filter(ev=>ev.name.indexOf(this.state.key)>=0).map(event=>
+                        <div className="evRow" onClick={()=>this.props.setEvent(event)}>
+                            <img src={''} />
                             <div className="evName">{name}</div>
                         </div>)
                     }

@@ -10,7 +10,7 @@ export function events(state = initialState, action) {
       case "SET_EVENT":
           return Object.assign({},
               state, {
-                  event: action.payload.event,
+                  event: action.payload,
                   photos:[],
                   lastPhotoFetchTime:null
               });

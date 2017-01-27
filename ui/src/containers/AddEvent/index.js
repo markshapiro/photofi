@@ -18,19 +18,6 @@ export class AddEvent extends Component {
     this.state={
       code:""
     };
-
-
-
-    setTimeout(()=>{
-
-      this.props.loadNextPhotos();
-
-    }, 500)
-
-
-
-
-
   }
   render() {
     return (
@@ -43,16 +30,16 @@ export class AddEvent extends Component {
           <button className="button submit" onClick={()=>this.add()}>Submit</button>
           <button className="button scan" onClick={()=>this.scan()}>Scan QR</button>
         </div>
-    )
+    );
   }
 
   add(){
-    this.props.goToEvent(this.state.code);
+    this.props.addEvent(this.state.code);
   }
 
   scan(){
     cordova.plugins.barcodeScanner.scan(result=>{
-      this.props.goToEvent(result.text);
+      this.props.addEvent(result.text);
     }, err=>{});
   }
 }

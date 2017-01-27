@@ -24,7 +24,8 @@ export function events(state = initialState, action) {
       case "ADD_PHOTOS":
           return Object.assign({},
               state, {
-                  photos: state.photos.concat(action.payload.map(d=>d.url)),
+                  //photos: state.photos.concat(action.payload.map(d=>d.url)),
+                  photos: _.uniqBy(action.payload.concat(state.photos), p=>p.id),
                   lastFetchTime: action.payload.length
                       ? Number(action.payload[0].dateupload)+1
                       : state.lastFetchTime

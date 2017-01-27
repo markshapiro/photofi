@@ -16,7 +16,11 @@ var EventSchema = new Schema({
         maxlength: 10,
         required: true
     },
-    "starred": Schema.Types.Mixed,
+    "starred": {
+        type: String,
+        maxlength: 100,
+        default:""
+    },
     created: {
         type: Date,
         required: false,

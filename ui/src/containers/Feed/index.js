@@ -41,12 +41,12 @@ export class Feed extends Component {
                className="centered flipper"
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
-            {photos && photos.map(data=>{
-
-              console.log(data)
-
-
-              return <img onClick={()=>this.showImage(data)} className={this.state.showGrid?"square":"list"} />
+            {photos && photos.map((url, ind)=>{
+              return <img
+                  key={ind}
+                  onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}
+                  src={url+(this.state.showGrid?'_s.jpg':'_h.jpg')}
+                  className={this.state.showGrid?"square":"list"} />
             })}
           </div>
          <div className={"imgEnlarge "+(this.state.showingImg && "showing")}
@@ -60,21 +60,6 @@ export class Feed extends Component {
           </div>
         </div>
     )
-  }
-
-  getUrlByGridType(url){
-    if(this.state.showGrid){
-      return url.replace(/\/image\/upload\/v[0-9]+\//,'/image/upload/c_thumb,h_80,w_80/')
-    }
-    else{
-      return url.replace(/\/image\/upload\/v[0-9]+\//,'/image/upload/c_thumb,h_80,w_240/')
-    }
-  }
-
-  showImage(url){
-    this.setState({
-      showingImg:url
-    });
   }
 
   share(url){

@@ -32,6 +32,10 @@ var UserSchema = new Schema({
             }
         }
     ],
+    isPhotographer: {
+        type: Boolean,
+        default:false
+    },
     "hashed_password": {
         type: String,
         maxlength: 200

@@ -8,6 +8,7 @@ import { AddEvent } from 'containers/AddEvent';
 import { Feed } from 'containers/Feed';
 import { Events } from 'containers/Events';
 import { BookEvent } from 'containers/BookEvent';
+import { Upload } from 'containers/Upload';
 
 import * as actionCreators from 'actions';
 import { bindAllActionCreators } from 'actions/utils';
@@ -20,6 +21,7 @@ export default function (store) {
     <Route path="feed" component={Feed} onEnter={()=>actions.events.loadNextPhotos()}/>
     <Route path="events" component={Events} onEnter={()=>actions.events.getPastEvents()}/>
     <Route path="bookevent" component={BookEvent} />
+    <Route path="upload" component={Upload} />
     <Route status={404} path="*" component={LogIn} />
   </Route>;
 }

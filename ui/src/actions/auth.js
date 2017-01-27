@@ -5,23 +5,22 @@ import { routeActions } from 'redux-simple-router';
 export function login(data) {
     return dispatch => {
         api.login(data)
-            .then(result => {
-                dispatch(createAction("LOGIN_SUCCES"));
-                dispatch(routeActions.push(`/addevent`));
-            })
-            .catch(error => dispatch(createAction("LOGIN_FAILURE", { error })));
+            .then(result => dispatch(atLogin(result.data)))
     };
 }
 
 export function register(data) {
     return dispatch => {
         api.register(data)
-            .then(result => {
-                dispatch(createAction("REGISTER_SUCCES"));
-                dispatch(routeActions.push(`/addevent`));
-            })
-            .catch(error => dispatch(createAction("REGISTER_FAILURE", { error })));
+            .then(result => dispatch(atLogin(result.data)))
     };
+}
+
+export function atLogin(user) {
+    return dispatch => {
+        dispatch(createAction("SET_USER",user));
+        dispatch(routeActions.push(`/addevent`));
+    }
 }
 
 export function logout() {

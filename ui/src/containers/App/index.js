@@ -7,7 +7,8 @@ const titles = {
   '/feed':'Feed',
   '/addevent':'Add event',
   '/events':'Events',
-  '/bookevent':'Book event'
+  '/bookevent':'Book event',
+  '/upload':'Upload'
 };
 
 export class App extends Component {

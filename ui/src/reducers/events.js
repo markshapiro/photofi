@@ -1,8 +1,10 @@
+import _ from 'lodash';
+
 const initialState = {
     event:null,
     events:[],
     photos:[],
-    lastPhotoFetchTime:null
+    lastFetchTime:0
 };
 
 export function events(state = initialState, action) {
@@ -12,7 +14,7 @@ export function events(state = initialState, action) {
               state, {
                   event: action.payload,
                   photos:[],
-                  lastPhotoFetchTime:null
+                  lastFetchTime:0
               });
       case "SET_PAST_EVENTS":
           return Object.assign({},
@@ -22,7 +24,10 @@ export function events(state = initialState, action) {
       case "ADD_PHOTOS":
           return Object.assign({},
               state, {
-                  photos: state.photos.concat(action.payload)
+                  photos: state.photos.concat(action.payload.map(d=>d.url)),
+                  lastFetchTime: action.payload.length
+                      ? Number(action.payload[0].dateupload)+1
+                      : state.lastFetchTime
               });
     default:
       return state;

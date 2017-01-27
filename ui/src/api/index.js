@@ -36,9 +36,16 @@ export function loadNextPhotos(code, date) {
   });
   flickr.photos.search({
     user_id:"150312554@N02",
-    tags:code
+    tags:code,
+    per_page:500,
+    min_upload_date:date,
+    extras:"date_upload"
   }, function(err, result) {
     if(!err){
+      result.photos.photo = result.photos.photo.map(({dateupload, farm, server, id, secret})=>({
+        dateupload,
+        url:`https://farm${farm}.static.flickr.com/${server}/${id}_${secret}`
+      }));
       return prom.resolve(result.photos.photo)
     }
     prom.reject(err)

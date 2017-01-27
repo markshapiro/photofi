@@ -27,7 +27,7 @@ export function getPastEvents() {
 
 export function loadNextPhotos() {
     return (dispatch, getState) => {
-        api.loadNextPhotos(getState().events.event.code)
+        api.loadNextPhotos(getState().events.event.code, getState().events.lastFetchTime)
             .then(photos=>dispatch(createAction("ADD_PHOTOS", photos)))
     }
 }

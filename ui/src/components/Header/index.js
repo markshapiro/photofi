@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions/auth';
 
 @connect(
-  state => state.events,
+  state => state.auth,
   dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class Header extends Component {
@@ -19,13 +19,9 @@ export class Header extends Component {
           <i className="ion-chevron-left" /> <span className="lightGrey">back</span>
         </div>}
         <div className="title UltraThin">{this.props.title}</div>
-
-
         <div className="topRight" onClick={()=>this.props.logout()}>
           <span className="lightGrey">logout</span> <i className="ion-log-out" />
         </div>
-
-
       </div>
     );
   }

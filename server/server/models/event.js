@@ -14,7 +14,8 @@ var EventSchema = new Schema({
         index: true,
         unique:true,
         maxlength: 10,
-        required: true
+        required: true,
+        validate: [value=>value.match(/^[a-zA-Z0-9]+$/g)]
     },
     "starred": {
         type: String,

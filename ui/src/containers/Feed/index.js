@@ -51,7 +51,6 @@ export class Feed extends Component {
                       e.stopPropagation();
                       this.props.starPhoto(event,url+'_h.jpg');
                     }}/>}
-                  {isPhotographer && <i className="ion-close-round" />}
               </div>
             })}
           </div>

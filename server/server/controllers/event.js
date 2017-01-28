@@ -9,7 +9,9 @@ var mongoose = require('mongoose'),
     _ = require('lodash'),
     logger = require(global.root + '/server/config/logs'),
     User= mongoose.model('User'),
-    config = require(global.root + '/server/config/config');
+    config = require(global.root + '/server/config/config'),
+    NodeFlickr = require("node-flickr"),
+    nodeFlickr = new NodeFlickr(config.flickr);
 
 module.exports.add = function(req, res){
     User.findOne({_id:req.user._id})
@@ -103,10 +105,21 @@ module.exports.uploadImage=function(req, res){
             err = "request successful but could not upload picture";
         }
         if(err) {
-            console.error(err);
+            logger.error(err);
             return res.status(500).send(err);
         }
-        res.send(result);
+        if(!req.event.starred){
+            nodeFlickr.get("photos.getInfo", {"photo_id":result[0]}, function(err, photoData){
+                if(photoData.photo){
+                    req.event.starred = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}_h.jpg`;
+                    return req.event.save().finally(()=>res.send(result))
+                }
+                res.send(result);
+            });
+        }
+        else{
+            res.send(result);
+        }
     });
 };
 

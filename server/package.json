@@ -28,6 +28,7 @@
     "lodash": "^4.11.2",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.17",
+    "node-flickr": "^1.0.0",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     "passport-remember-me": "0.0.1",

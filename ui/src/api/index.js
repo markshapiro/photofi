@@ -2,6 +2,10 @@ import axios from 'axios';
 import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
+var flickr = new Flickr({
+  api_key: "817677ed2b6d78b3e496dc06e3366f29"
+});
+
 //const prefix = "http://api.photofi.co.il";
 const prefix = "http://localhost:4000";
 
@@ -46,9 +50,6 @@ export function upload(code, data) {
 
 export function loadNextPhotos(code, date) {
   var prom = Q.defer();
-  var flickr = new Flickr({
-    api_key: "817677ed2b6d78b3e496dc06e3366f29"
-  });
   flickr.photos.search({
     user_id:"150312554@N02",
     tags:code,

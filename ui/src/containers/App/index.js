@@ -10,14 +10,6 @@ require('./common.less');
 /* actions */
 import * as actionCreators from 'actions/auth';
 
-const titles = {
-  '/feed':'Feed',
-  '/addevent':'Add event',
-  '/events':'Events',
-  '/bookevent':'Book event',
-  '/upload':'Upload'
-};
-
 @connect(
         state => state.auth,
         dispatch => bindActionCreators(actionCreators, dispatch)
@@ -27,13 +19,30 @@ export class App extends Component {
     children: React.PropTypes.any
   };
 
+  componentWillMount(){
+    this.updateTitles();
+  }
+  componentDidUpdate(prevProps, prevState){
+    this.updateTitles();
+  }
+
+  updateTitles(){
+    this.titles = {
+      '/feed': this.props.user && this.props.user.isPhotographer ? 'Manage' : 'Feed',
+      '/addevent':'Add event',
+      '/events':'Events',
+      '/bookevent':'Book event',
+      '/upload': 'Upload'
+    };
+  }
+
   render() {
-    const title = titles[this.props.location.pathname];
+    const title = this.titles[this.props.location.pathname];
     return (
       <section>
         {title && <Header hideBackBtn={this.props.location.pathname==='/events'} onLeftClick={()=>this.props.history.goBack()} title={title} />}
         {this.props.children}
-        {title && <Footer titles={titles} user={this.props.user}/>}
+        {title && <Footer titles={this.titles} user={this.props.user}/>}
       </section>
     );
   }

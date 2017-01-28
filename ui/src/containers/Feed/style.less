@@ -12,19 +12,44 @@
     position:absolute;
     top:160px;
     left:0px;
-    bottom:70px;
+    bottom:50px;
     width:100%;
     overflow-y:scroll;
     border-top: 1px solid #D7D7D7;
     -webkit-overflow-scrolling: touch;
-    .square{
-      width:25%;
-      border:2px solid white;
-      box-sizing: border-box;
-    }
-    .list{
-      width:100%;
-      border-bottom:4px solid white;
+    .img{
+      position:relative;
+
+      &.square{
+        width:25%;
+        border:2px solid white;
+        box-sizing: border-box;
+        display: inline-block;
+        img{
+          width:100%;
+        }
+      }
+      &.list{
+        width:100%;
+        border-bottom:4px solid white;
+        img{
+          width:100%;
+        }
+      }
+      i{
+        color:white;
+        position:absolute;
+        &.star{
+          right:2px;
+          top:0px;
+          font-size: 30px;
+        }
+        &.ion-close-round{
+          right:30px;
+          top:6px;
+          font-size: 22px;
+        }
+      }
     }
   }
   .imgEnlarge{

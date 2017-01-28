@@ -2,8 +2,8 @@ import axios from 'axios';
 import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://api.photofi.co.il";
-//const prefix = "http://localhost:4000";
+//const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
 const flashAirPrefix = "http://flashair";
 //const flashAirPrefix = "http://localhost:5000";
@@ -26,6 +26,10 @@ export function addEvent(code) {
 
 export function createEvent(code, name) {
   return axios.post(prefix + '/api/event', {code, name});
+}
+
+export function updateEvent(event) {
+  return axios.put(prefix + '/api/event/'+event.code, event);
 }
 
 export function getEvent(code) {
@@ -75,7 +79,7 @@ export function loadPicsFromCamera(prefix='/DCIM'){
           .filter(cols=>cols.length===6)
           .forEach(cols=>{
             if(cols[2]=='0') proms.push(loadPicsFromCamera(prefix+'/'+cols[1]));
-            else if(cols[1].match(/.(jpg|png)$/g)) photos.push(flashAirPrefix+prefix+'/'+cols[1]);
+            else if(cols[1].match(/.(jpg|jpeg|png)$/g)) photos.push(flashAirPrefix+prefix+'/'+cols[1]);
       });
       return Q.all(proms)
         .then(res=>{

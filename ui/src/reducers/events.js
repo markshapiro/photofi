@@ -35,6 +35,13 @@ export function events(state = initialState, action) {
                       ? Number(action.payload[0].dateupload)+1
                       : state.lastFetchTime
               });
+      case "SET_STARRED_PHOTO":
+          return Object.assign({},
+              state, {
+                  event: Object.assign({}, state.event, {
+                      starred: action.payload
+                  })
+              });
     default:
       return state;
   }

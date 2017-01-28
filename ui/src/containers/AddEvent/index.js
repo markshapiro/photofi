@@ -38,7 +38,7 @@ export class AddEvent extends Component {
           </div>
           <div className="buttons">
             <button className="button submit" onClick={()=>this.add()}>Submit</button>
-            <button className="button scan" onClick={()=>this.scan()}>Scan QR</button>
+            {!this.state.toggled && <button className="button scan" onClick={()=>this.scan()}>Scan QR</button>}
           </div>
         </div>
     );

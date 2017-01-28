@@ -8,7 +8,7 @@ require('./style.less');
 import * as actionCreators from 'actions/events';
 
 @connect(
-  state => state.events,
+  state => Object.assign({}, state.events, state.auth.user),
   dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class Feed extends Component {
@@ -34,7 +34,7 @@ export class Feed extends Component {
   }
 
   render() {
-    const {photos, event} = this.props;
+    const {photos, event, isPhotographer} = this.props;
     return (
         <div className="feed">
           <div className="txtCentered title">{event.name}</div>
@@ -43,11 +43,16 @@ export class Feed extends Component {
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
             {photos.map((url, index)=>{
-              return <img
-                  key={index}
-                  onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}
-                  src={url+(this.state.showGrid?'_s.jpg':'_h.jpg')}
-                  className={this.state.showGrid?"square":"list"} />
+              return <div key={index} className={"img "+(this.state.showGrid?"square":"list")} onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}>
+                  <img src={url+(this.state.showGrid?'_s.jpg':'_h.jpg')}/>
+                  {isPhotographer && <i className={'star '+(url+'_h.jpg'===event.starred?"ion-android-star":"ion-android-star-outline")}
+                     onClick={e=>{
+                      e.preventDefault();
+                      e.stopPropagation();
+                      this.props.starPhoto(event,url+'_h.jpg');
+                    }}/>}
+                  {isPhotographer && <i className="ion-close-round" />}
+              </div>
             })}
           </div>
          <div className={"imgEnlarge "+(this.state.showingImg && "showing")}

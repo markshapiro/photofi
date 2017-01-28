@@ -26,6 +26,13 @@ export function setEvent(event) {
     };
 }
 
+export function starPhoto(event, url) {
+    return dispatch => {
+        api.updateEvent(Object.assign({}, event, {starred: url}))
+            .then(result => dispatch(createAction("SET_STARRED_PHOTO", url)));
+    };
+}
+
 export function getPastEvents() {
     return dispatch => {
         api.events()

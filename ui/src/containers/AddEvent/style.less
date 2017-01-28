@@ -48,47 +48,34 @@
     }
     &.switch{
       margin:15px 0px 0px 0px !important;
+      padding:0px;
       border: 1px solid #DB4A41;
-      background: linear-gradient(
-              to right,
-              rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%,
-              #DB4A41 50%, #DB4A41 100%
-      );
-      background: -webkit-linear-gradient(
-              to right,
-              rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%,
-              #DB4A41 50%, #DB4A41 100%
-      );
+      overflow: hidden;
       .create{
         float:left;
         color:#797373;
         width:50%;
+        background:white;
       }
       .add{
         float:right;
         color:white;
         width:50%;
+        background:#DB4A41;
       }
       &.toggled{
         .create {
           color: white !important;
+          background:#DB4A41;
         }
         .add {
           color: #797373 !important;
+          background:white;
         }
       }
     }
     &.toggled{
-      background: linear-gradient(
-              to right,
-              #DB4A41 0%, #DB4A41 50%,
-              rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%
-      ) !important;
-      background: -webkit-linear-gradient(
-              to right,
-              #DB4A41 0%, #DB4A41 50%,
-              rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%
-      ) !important;
+
     }
   }
 }

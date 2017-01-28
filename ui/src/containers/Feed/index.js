@@ -42,9 +42,9 @@ export class Feed extends Component {
                className="centered flipper"
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
-            {photos.map(url=>{
+            {photos.map((url, index)=>{
               return <img
-                  key={url}
+                  key={index}
                   onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}
                   src={url+(this.state.showGrid?'_s.jpg':'_h.jpg')}
                   className={this.state.showGrid?"square":"list"} />

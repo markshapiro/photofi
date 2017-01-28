@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
-
+import Popup from 'react-popup';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -38,11 +38,12 @@ export class App extends Component {
 
   render() {
     const title = this.titles[this.props.location.pathname];
-    return (
+      return (
       <section>
         {title && <Header hideBackBtn={this.props.location.pathname==='/events'} onLeftClick={()=>this.props.history.goBack()} title={title} />}
         {this.props.children}
         {title && <Footer titles={this.titles} user={this.props.user}/>}
+        <Popup className="my-popup" closeBtn={false}/>
       </section>
     );
   }

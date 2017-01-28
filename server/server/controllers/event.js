@@ -17,7 +17,7 @@ module.exports.add = function(req, res){
     User.findOne({_id:req.user._id})
         .then(user=>{
             if(!user.events.filter(d=>d.code===req.params.eventCode).length){
-                if(user.isPhotographer) throw "PHOTOGRAPHER_DOES_NOT_OWN_EVENT";
+                if(user.isPhotographer) throw "CANNOT_ENTER_AS_PHOTOGRAPHER";
                 user.events.push({code:req.params.eventCode});
                 return user.save()
             }
@@ -102,7 +102,7 @@ module.exports.uploadImage=function(req, res){
     };
     Flickr.upload(uploadOptions, config.flickr, function(err, result) {
         if(!result.length){
-            err = "request successful but could not upload picture";
+            err = "COULD_NOT_UPLOAD";
         }
         if(err) {
             logger.error(err);
@@ -132,7 +132,7 @@ module.exports.getEventByCode=function(req, res, next, id){
             return res.status(500).send(err);
         }
         if(!record){
-            res.status(404).send({result: "NO_RECORD"});
+            res.status(404).send("NO_RECORD");
         }
         else{
             req.event = record;

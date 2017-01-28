@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import * as api from '../../api';
+import Popup from 'react-popup';
 
 require('./style.less');
 
@@ -45,5 +46,12 @@ export class BookEvent extends Component {
       phone: findDOMNode(this.refs.phone).value,
       email: findDOMNode(this.refs.email).value
     })
+    .then(()=>{
+        Popup.create({
+          //title: "No Event",
+          content: "Your request was successfully sent",
+          buttons: {right: ['ok']}
+        });
+      })
   }
 }

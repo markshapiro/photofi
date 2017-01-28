@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 
+import Popup from 'react-popup';
+
 require('./style.less');
 
 /* actions */
@@ -45,6 +47,8 @@ export class AddEvent extends Component {
   }
 
   add(){
+
+
     if(this.state.toggled){
       this.props.createEvent(this.state.code, this.state.name);
     }

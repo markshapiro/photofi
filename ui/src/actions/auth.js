@@ -6,6 +6,7 @@ export function login(data) {
     return dispatch => {
         api.login(data)
             .then(result => dispatch(atLogin(result.data)))
+            .catch(error => dispatch(createAction("LOGIN_FAILURE", { error })));
     };
 }
 
@@ -13,6 +14,7 @@ export function register(data) {
     return dispatch => {
         api.register(data)
             .then(result => dispatch(atLogin(result.data)))
+            .catch(error => dispatch(createAction("REGISTER_FAILURE", { error })));
     };
 }
 

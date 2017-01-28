@@ -2,8 +2,8 @@ import axios from 'axios';
 import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://api.photofi.co.il";
-//const prefix = "http://localhost:4000";
+//const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
 const flashAirPrefix = "http://flashair";
 //const flashAirPrefix = "http://localhost:5000";
@@ -13,7 +13,7 @@ export function login(data) {
 }
 
 export function events() {
-  return axios.get(prefix + '/api/events');
+  return axios.get(prefix + '/api/event');
 }
 
 export function register(data) {
@@ -21,11 +21,15 @@ export function register(data) {
 }
 
 export function addEvent(code) {
-  return axios.post(prefix + '/api/events/'+code+'/add');
+  return axios.post(prefix + '/api/event/'+code+'/add');
+}
+
+export function createEvent(code, name) {
+  return axios.post(prefix + '/api/event', {code, name});
 }
 
 export function getEvent(code) {
-  return axios.get(prefix + '/api/events/'+code);
+  return axios.get(prefix + '/api/event/'+code);
 }
 
 export function bookEvent(data) {
@@ -33,7 +37,7 @@ export function bookEvent(data) {
 }
 
 export function upload(code, data) {
-  return axios.post(prefix + '/api/uploadImage',{eventCode:code, data:data});
+  return axios.post(prefix + '/api/event/'+code+'/upload',{data});
 }
 
 export function loadNextPhotos(code, date) {

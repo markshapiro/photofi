@@ -20,6 +20,7 @@ export class Upload extends Component {
         return (
             <div className="upload">
                 <button onClick={()=>this.props.loadFromCamera()}>load from camera</button>
+                <button onClick={()=>this.props.uploadCameraPhotosMOCK()}>load MOCK photos</button>
                 <button onClick={()=>this.props.uploadCameraPhotos()}>upload to server</button>
                 {this.props.cameraPhotos.map((rawPhoto, index)=>
                     <img key={index} src={rawPhoto} style={{width:'25%'}} />

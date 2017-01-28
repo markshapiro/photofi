@@ -12,10 +12,10 @@ var mongoose = require('mongoose'),
     config = require(global.root + '/server/config/config');
 
 module.exports.add = function(req, res){
-    /*
     User.findOne({_id:req.user._id})
         .then(user=>{
             if(!user.events.filter(d=>d.code===req.params.eventCode).length){
+                if(user.isPhotographer) throw "PHOTOGRAPHER_DOES_NOT_OWN_EVENT";
                 user.events.push({code:req.params.eventCode});
                 return user.save()
             }
@@ -25,34 +25,17 @@ module.exports.add = function(req, res){
             logger.error(err);
             return res.status(500).send(err);
         });
-    */
-        var prom = Q();
-        if(!req.user.events.filter(d=>d.code===req.params.eventCode).length){
-            req.user.events.push({code:req.params.eventCode});
-            prom = req.user.save()
-        }
-        prom.then(()=>res.send(req.event))
-        .catch(err=>{
-            logger.error(err);
-            return res.status(500).send(err);
-        });
 };
 
 module.exports.create = function(req, res){
-    //(new Event(req.body))
-    //    .save()
-    //    .then(()=>User.findOne({_id: req.user._id}))
-    //    .then(user=>{
-    //        user.events.push({code: req.body.code});
-    //        return user.save()
-    //    })
     (new Event(req.body))
         .save()
-        .then(()=>{
-            req.user.events.push({code: req.body.code});
-            return req.user.save()
-        })
-        .then(()=>res.send({}))
+        .then(event=>User.findOne({_id: req.user._id})
+            .then(user=>{
+                user.events.push({code: req.body.code});
+                return user.save()
+            })
+            .then(()=>res.send(event)))
         .catch(err=>{
             logger.error(err);
             return res.status(500).send(err);
@@ -69,21 +52,9 @@ module.exports.update = function(req, res){
         });
 };
 
-module.exports.eventsPhoto = function(req, res){
-    res.send({})
-};
-
 module.exports.list = function(req, res){
-
-    //User.findOne({_id:req.user._id}, '-salt -hashed_password')
-    //    .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
-    //    .then(events=>res.send(events))
-    //    .catch(err=>{
-    //        logger.error(err);
-    //        return res.status(500).send(err);
-    //    });
-
-    Event.find({code:{$in:req.user.events.map(d=>d.code)}})
+    User.findOne({_id:req.user._id}, '-salt -hashed_password')
+        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
         .then(events=>res.send(events))
         .catch(err=>{
             logger.error(err);
@@ -123,7 +94,7 @@ module.exports.uploadImage=function(req, res){
     bufferStream.path = '-';
     var uploadOptions = {
         photos: [{
-            tags: [req.body.eventCode],
+            tags: [req.params.eventCode],
             photo: bufferStream
         }]
     };

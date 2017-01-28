@@ -6,36 +6,34 @@ var eventController = require(global.root+'/server/controllers/event.js'),
 
 module.exports = function(app) {
 
-    app.route('/events/:eventCode/add')
+    app.route('/event/:eventCode/add')
         .post(
             auth.requiresLogin(),
             eventController.add);
 
-    app.route('/events/:eventCode')
+    app.route('/event/:eventCode')
         .put(
             auth.requiresLogin(true),
+            auth.requiresEventOwnership(),
             eventController.update);
 
-    app.route('/events')
+    app.route('/event')
         .get(
-            auth.requiresLogin(true),
+            auth.requiresLogin(),
             eventController.list)
         .post(
             auth.requiresLogin(true),
             eventController.create);
-
-    app.route('/eventsPhoto')
-        .post(
-            auth.requiresLogin(true),
-            eventController.eventsPhoto);
 
     app.route('/bookEvent')
         .post(
             auth.requiresLogin(),
             eventController.bookEvent);
 
-    app.route('/uploadImage')
+    app.route('/event/:eventCode/upload')
         .post(
+            auth.requiresLogin(true),
+            auth.requiresEventOwnership(),
             eventController.uploadImage);
 
     app.param('eventCode',eventController.getEventByCode);

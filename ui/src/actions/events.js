@@ -11,6 +11,14 @@ export function addEvent(code) {
     };
 }
 
+export function createEvent(code, name) {
+    return dispatch => {
+        api.createEvent(code.toLowerCase(), name)
+            .then(result => dispatch(setEvent(result.data)))
+            .catch(error => dispatch(routeActions.push(`/addevent`)));
+    };
+}
+
 export function setEvent(event) {
     return dispatch => {
         dispatch(createAction("SET_EVENT", event));
@@ -41,14 +49,6 @@ export function loadFromCamera() {
 
 export function uploadCameraPhotos() {
     return (dispatch, getState) => {
-        //var some = [
-        //    "http://www.fnordware.com/superpng/pnggrad8rgb.png",
-        //    "http://www.techinsights.com/uploadedImages/Public_Website/Content_-_Primary/Teardowncom/Sample_Reports/sample-icon.png",
-        //    "http://www.wakarusachamber.com/images/400X200.gif",
-        //    "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg",
-        //    "http://thebest3d.com/pdp/landscape200x500.jpg"
-        //];
-        //const photos = [ some[Math.floor(some.length*Math.random())]  ];
         const photos = getState().events.cameraPhotos;
         Q.all(photos.map(url=>cropImage(url)
                 .then(data=>api.upload(getState().events.event.code, data))
@@ -62,7 +62,7 @@ export function uploadCameraPhotos() {
         .then(()=>{
 
                 alert("uploaded successfuly")
-                createAction("SET_CAMERA_PHOTOS", [])
+                dispatch(createAction("SET_CAMERA_PHOTOS", []))
             })
     }
 }
@@ -72,5 +72,21 @@ export function checkIfHasEvent() {
         if(!getState().events.event || !getState().events.event.code){
             dispatch(routeActions.push(`/addevent`))
         }
+    }
+}
+
+
+
+
+export function uploadCameraPhotosMOCK(photos) {
+    return dispatch => {
+        var some = [
+            "http://www.fnordware.com/superpng/pnggrad8rgb.png",
+            "http://www.techinsights.com/uploadedImages/Public_Website/Content_-_Primary/Teardowncom/Sample_Reports/sample-icon.png",
+            "http://www.wakarusachamber.com/images/400X200.gif",
+            "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg",
+            "http://thebest3d.com/pdp/landscape200x500.jpg"
+        ];
+        dispatch(createAction("SET_CAMERA_PHOTOS", [   some[Math.floor(some.length*Math.random())] , some[Math.floor(some.length*Math.random())]  ]))
     }
 }

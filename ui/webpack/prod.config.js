@@ -27,6 +27,9 @@ module.exports = {
       },
       __DEVELOPMENT__: false,
     }),
+    new webpack.ProvidePlugin({
+      Promise: 'es6-promise'
+    }),
     new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),

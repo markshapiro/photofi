@@ -79,6 +79,7 @@
     "flickrapi": "^0.6.0"
   },
   "dependencies": {
+    "es6-promise": "^4.0.5",
     "q": "^1.4.1",
     "react": "^0.14.6",
     "react-redux": "^4.0.6",

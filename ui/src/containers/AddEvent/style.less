@@ -4,17 +4,17 @@
     .txtCentered{
       display: none;
     }
-    .enterCode{
-      margin: 20px 0px !important;
+    .buttons{
+      margin-top:5px !important;
     }
   }
   .txtCentered{
-    margin-top:50px;
+    margin: 30px 0px;
   }
   .enterCode{
     text-align: center;
     width: 100%;
-    margin: 40px 0px;
+    margin: 10px 0px;
 
     span{
       font-size: 23px;
@@ -24,11 +24,13 @@
       border:1px solid #DB4A41;
     }
   }
+  .buttons{
+    margin-top:30px;
+  }
   .button{
     -webkit-border-radius: 23px;
     -moz-border-radius: 23px;
     border-radius: 23px;
-
     margin-bottom: 15px;
     width:60%;
     padding: 5px 0px;
@@ -43,6 +45,50 @@
     &.scan{
       background:rgba(0,0,0,0);
       border: 1px solid #DB4A41;
+    }
+    &.switch{
+      margin:15px 0px 0px 0px !important;
+      border: 1px solid #DB4A41;
+      background: linear-gradient(
+              to right,
+              rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%,
+              #DB4A41 50%, #DB4A41 100%
+      );
+      background: -webkit-linear-gradient(
+              to right,
+              rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%,
+              #DB4A41 50%, #DB4A41 100%
+      );
+      .create{
+        float:left;
+        color:#797373;
+        width:50%;
+      }
+      .add{
+        float:right;
+        color:white;
+        width:50%;
+      }
+      &.toggled{
+        .create {
+          color: white !important;
+        }
+        .add {
+          color: #797373 !important;
+        }
+      }
+    }
+    &.toggled{
+      background: linear-gradient(
+              to right,
+              #DB4A41 0%, #DB4A41 50%,
+              rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%
+      ) !important;
+      background: -webkit-linear-gradient(
+              to right,
+              #DB4A41 0%, #DB4A41 50%,
+              rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%
+      ) !important;
     }
   }
 }

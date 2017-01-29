@@ -61,10 +61,38 @@ export function loadFromCamera() {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCamera()
             .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
-            .then(rawPhotos=>Q.all(rawPhotos.map(url=>cropImage(url)
-                .then(data=>({url,data})))))
+            .then(rawPhotos=>{
+                var updater={setListener:function(update){this.update=update;}};
+                var popupId = Popup.create({
+                    title:'Fetching Images',
+                    content: <ProgressBar updater={updater}></ProgressBar>,
+                    buttons: {right: [{
+                        text: '',
+                        className: 'unclickable-overlay',
+                        action: function (popup) {}
+                    }]}
+                });
+                var result=[];
+                var allPhotoPromises = rawPhotos
+                    .map(photo=>()=>cropImage(photo)
+                        .then(data=>{
+                            result.push({url:photo, data})
+                            updater.update( Math.ceil((result.length/rawPhotos.length)*100));
+                        }));
+                return _.reduce(allPhotoPromises, Q.finally, null)
+                    .then(()=>result)
+                    .finally(()=>{
+                        Popup.close(popupId);
+                    });
+            })
             .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
-            .catch(error=>dispatch(createAction("LOAD_PHOTOS_FAILURE", { error })))
+            .catch(()=>{
+                Popup.create({
+                    title: "Could not get images!",
+                    content: "",
+                    buttons: {right: ['ok']}
+                });
+            })
     }
 }
 
@@ -87,17 +115,13 @@ export function uploadCameraPhotos(checked) {
         popupProm.promise.then(()=>{
             const eventCode = getState().events.event.code;
             const cameraPhotos = getState().events.cameraPhotos;
-            var updater={
-                setListener:function(update){
-                    this.update=update
-                }
-            };
+            var updater={setListener:function(update){this.update=update;}};
             var popupId = Popup.create({
                 title:'Uploading Images',
                 content: <ProgressBar updater={updater}></ProgressBar>,
                 buttons: {right: [{
                     text: '',
-                    className: 'unclickable-overlay', // optional
+                    className: 'unclickable-overlay',
                     action: function (popup) {}
                 }]}
             });
@@ -105,7 +129,7 @@ export function uploadCameraPhotos(checked) {
             var allPhotoPromises = checked
                 .map(photo=>()=>api.upload(eventCode, photo.data)
                     .then(()=>{
-                        succeeded.push(photo)
+                        succeeded.push(photo);
                         finished++;
                         updater.update( Math.ceil((finished/checked.length)*100));
                         localStorage.setItem(eventCode+"_"+photo.url,'1');
@@ -116,7 +140,6 @@ export function uploadCameraPhotos(checked) {
 
             _.reduce(allPhotoPromises, Q.finally, null)
                 .then(()=>{
-                    Popup.close(popupId);
                     dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(photo=>succeeded.indexOf(photo)===-1)))
                     Popup.create({
                         title:'Uploading Complete',
@@ -124,7 +147,7 @@ export function uploadCameraPhotos(checked) {
                         buttons: {right: ['ok']}
                     });
                 })
-
+                .finally(()=>Popup.close(popupId))
         })
     }
 }
@@ -141,28 +164,3 @@ export function checkIfHasEvent() {
         }
     }
 }
-
-
-
-
-/*
-
-setTimeout(()=>{
-
-    Popup.create({
-        title: "No Event",
-        content: "Please add or enter existing event",
-        buttons: {right: [{
-            text: '',
-            className: 'unclickable-overlay', // optional
-            action: function (popup) {
-                // do stuff
-                //popup.close();
-            }
-        }]}
-    });
-
-},1000)
-
-
-*/

@@ -57,8 +57,10 @@ export function loadNextPhotos() {
 }
 
 export function loadFromCamera() {
-    return dispatch => {
+    return (dispatch, getState) => {
+        const eventCode = getState().events.event.code;
         api.loadPicsFromCamera()
+            .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
             .then(rawPhotos=>Q.all(rawPhotos.map(url=>cropImage(url)
                 .then(data=>({url,data})))))
             .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
@@ -106,7 +108,7 @@ export function uploadCameraPhotos(checked) {
                         succeeded.push(photo)
                         finished++;
                         updater.update( Math.ceil((finished/checked.length)*100));
-                        //localStorage.setItem(eventCode+"_"+photo.url,'1');
+                        localStorage.setItem(eventCode+"_"+photo.url,'1');
                     }).catch(()=>{
                         finished++;
                         updater.update( Math.ceil((finished/checked.length)*100));
@@ -115,7 +117,7 @@ export function uploadCameraPhotos(checked) {
             _.reduce(allPhotoPromises, Q.finally, null)
                 .then(()=>{
                     Popup.close(popupId);
-                    dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter((x,i)=>succeeded.indexOf(i)===-1)))
+                    dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(photo=>succeeded.indexOf(photo)===-1)))
                     Popup.create({
                         title:'Uploading Complete',
                         content: `Uploaded ${succeeded.length} out of ${finished} photos`,

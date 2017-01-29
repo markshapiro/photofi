@@ -21,12 +21,8 @@ export const apiErrorMiddleware = store => next => action => {
     const { error } = result.payload;
     const errName = error.response.data.name || error.response.data.code || error.response.data;
     const errorKey = result.type +"."+errName.toUpperCase();
-
-    console.log(">>>>>>ERROR>>>>>>>>>",result,  errorKey)
-
     if(errors[errorKey]){
       Popup.create({
-        //title: "No Event",
         content: errors[errorKey],
         buttons: {right: ['ok']}
       });
@@ -35,12 +31,20 @@ export const apiErrorMiddleware = store => next => action => {
     switch (error.status) {
       case 400:
       case 500:
+        Popup.create({
+          content: "There was a problem with your request",
+          buttons: {right: ['ok']}
+        });
         break;
       case 401:
         break;
       case 404:
         break;
       default:
+        Popup.create({
+          content: "Sorry, an error has occurred",
+          buttons: {right: ['ok']}
+        });
         break;
     }
   }

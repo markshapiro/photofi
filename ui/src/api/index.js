@@ -70,6 +70,27 @@ export function loadNextPhotos(code, date) {
 }
 
 export function loadPicsFromCamera(prefix='/DCIM'){
+
+
+
+
+  return Q( [
+    "http://www.fnordware.com/superpng/pnggrad8rgb.png",
+    "http://www.techinsights.com/uploadedImages/Public_Website/Content_-_Primary/Teardowncom/Sample_Reports/sample-icon.png",
+    "http://www.wakarusachamber.com/images/400X200.gif",
+    "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg",
+    "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_nikkor28-300mmf_35-56gd_ed_vr/img/sample/sample4_l.jpg",
+    "http://www.ricoh-imaging.co.jp/english/r_dc/caplio/r7/img/sample_04.jpg",
+    "http://www.tompetty.com/sites/g/files/g2000004366/f/Sample-image10-highres.jpg",
+    "http://mynokiablog.com/wp-content/uploads/2010/07/4807161920_68b479dc77_o.jpg",
+    "https://www.olympus-imaging.jp/product/compact/1/sample/images/index_img_04.jpg",
+    "http://wesdeboer.com/files/2013/01/sample-1.jpg",
+    "https://www.dpreview.com/files/p/articles/5225148710/5S_photo_6.jpg"
+  ]  );
+
+
+
+
   return axios.get(flashAirPrefix+'/command.cgi?op=100&DIR='+prefix)
     .then(result=>{
       var photos=[];

@@ -62,23 +62,39 @@ export function loadFromCamera() {
     }
 }
 
-export function uploadCameraPhotos() {
+export function uploadCameraPhotos(checkedPhotos) {
     return (dispatch, getState) => {
-        const photos = getState().events.cameraPhotos;
-        Q.all(photos.map(url=>cropImage(url)
-                .then(data=>api.upload(getState().events.event.code, data))
-                .then(()=>{
+        Popup.create({
+            content: "Are you sure you want to upload the "+checkedPhotos.length+" you selected?",
+            buttons: {right: [{
+                text: 'No'
+            }, {
+                text: 'Yes',
+                action: function (Box) {
+                    uploadPhotos(checkedPhotos)
+                    Box.close();
+                }
+            }]}
+        });
+    }
+}
 
-                })
-                .catch(()=>{
-                    alert("upload fail")
-                })
-        ))
+function uploadPhotos(photos){
+    /*
+    Q.all(checkedPhotos.map(url=>cropImage(url)
+            .then(data=>api.upload(getState().events.event.code, data))
+            .then(()=>{
+
+            })
+            .catch(()=>{
+                alert("upload fail")
+            })
+    ))
         .then(()=>{
             dispatch(createAction("SET_CAMERA_PHOTOS", []))
         })
         .catch(error=>dispatch(createAction("UPLOAD_FAILURE", { error })))
-    }
+    */
 }
 
 export function checkIfHasEvent() {
@@ -91,21 +107,5 @@ export function checkIfHasEvent() {
             });
             dispatch(routeActions.push(`/addevent`))
         }
-    }
-}
-
-
-
-
-export function uploadCameraPhotosMOCK(photos) {
-    return dispatch => {
-        var some = [
-            "http://www.fnordware.com/superpng/pnggrad8rgb.png",
-            "http://www.techinsights.com/uploadedImages/Public_Website/Content_-_Primary/Teardowncom/Sample_Reports/sample-icon.png",
-            "http://www.wakarusachamber.com/images/400X200.gif",
-            "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg",
-            "http://imgsv.imaging.nikon.com/lineup/lens/zoom/normalzoom/af-s_nikkor28-300mmf_35-56gd_ed_vr/img/sample/sample4_l.jpg"
-        ];
-        dispatch(createAction("SET_CAMERA_PHOTOS", [   some[Math.floor(some.length*Math.random())] , some[Math.floor(some.length*Math.random())]  ]))
     }
 }

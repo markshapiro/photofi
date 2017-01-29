@@ -15,7 +15,8 @@ export function events(state = initialState, action) {
               state, {
                   event: action.payload,
                   photos:[],
-                  lastFetchTime:0
+                  lastFetchTime:0,
+                  cameraPhotos:[]
               });
       case "SET_PAST_EVENTS":
           return Object.assign({},

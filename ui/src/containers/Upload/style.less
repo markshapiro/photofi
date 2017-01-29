@@ -1,9 +1,57 @@
 
 .upload {
-
   button{
-    width:100%;
-    font-size:25px;
-  }
+    vertical-align: top;
 
+    border:0px;
+    border-radius:10px;
+    &.load{
+      width:80%;
+      background:#DB4A41;
+      float:left;
+      color:white;
+      font-size:22px;
+      height: 50px;
+    }
+    &.upload{
+      width:20%;
+      background:#414ADB;
+      float:right;
+      height: 50px;
+      .ion-android-upload{
+        color:white;
+        font-size:32px;
+      }
+    }
+  }
+  .photosScroller {
+    position: absolute;
+    top: 106px;
+    left: 0px;
+    bottom: 50px;
+    width: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    .img{
+      position:relative;
+      width:33%;
+      border:2px solid white;
+      box-sizing: border-box;
+      display: inline-block;
+      img{
+        width:100%;
+      }
+    }
+    i{
+      color:white;
+      position:absolute;
+      &.star{
+        right:2px;
+        top:0px;
+        font-size: 30px;
+        color:white;
+      }
+    }
+  }
 }

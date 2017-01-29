@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 require('./style.less');
 
@@ -14,18 +15,29 @@ import * as actionCreators from 'actions/events';
 export class Upload extends Component {
     constructor(props){
         super(props);
-        this.state={};
+        this.state={
+            checked:[]
+        };
     }
     render() {
         return (
             <div className="upload">
-                <button onClick={()=>this.props.loadFromCamera()}>load from camera</button>
-                <button onClick={()=>this.props.uploadCameraPhotosMOCK()}>load MOCK photos</button>
-                <button onClick={()=>this.props.uploadCameraPhotos()}>upload to server</button>
-                {this.props.cameraPhotos.map((rawPhoto, index)=>
-                    <img key={index} src={rawPhoto} style={{width:'25%'}} />
-                )}
+                <button className="load" onClick={()=>this.props.loadFromCamera()}>load from camera</button>
+                <button className="upload" onClick={()=>this.props.uploadCameraPhotos(this.state.checked)}><i className="ion-android-upload"/></button>
+                <div className="photosScroller">
+                    {this.props.cameraPhotos.map(rawPhoto=>{
+                        const checked = this.state.checked.indexOf(rawPhoto)>=0;
+                        return <div key={rawPhoto} className="img" onClick={()=>this.setState({
+                                checked:  checked
+                                    ?_.without(this.state.checked, rawPhoto)
+                                    :this.state.checked.concat(rawPhoto)
+                            })}>
+                            <img src={rawPhoto}/>
+                            <i className={"star ion-android-checkbox-outline"+(!checked ? '-blank' : '')}  />
+                        </div>
+                    })}
+                </div>
             </div>
         )
     }
-};
+}

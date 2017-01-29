@@ -102,7 +102,7 @@ module.exports.uploadImage=function(req, res){
     };
     Flickr.upload(uploadOptions, config.flickr, function(err, result) {
         if(!result.length){
-            err = "COULD_NOT_UPLOAD";
+            err = "request successful but could not upload picture";
         }
         if(err) {
             logger.error(err);
@@ -132,7 +132,7 @@ module.exports.getEventByCode=function(req, res, next, id){
             return res.status(500).send(err);
         }
         if(!record){
-            res.status(404).send("NO_RECORD");
+            res.status(404).send({result: "NO_RECORD"});
         }
         else{
             req.event = record;

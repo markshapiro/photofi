@@ -3,6 +3,8 @@ import * as api from '../api';
 import { routeActions } from 'redux-simple-router';
 import Q from 'q';
 import Popup from 'react-popup';
+import { ProgressBar } from '../components/ProgressBar'
+import React from 'react';
 
 export function addEvent(code) {
     return dispatch => {
@@ -57,44 +59,66 @@ export function loadNextPhotos() {
 export function loadFromCamera() {
     return dispatch => {
         api.loadPicsFromCamera()
+            .then(rawPhotos=>Q.all(rawPhotos.map(url=>cropImage(url))))
             .then(rawPhotos=>dispatch(createAction("SET_CAMERA_PHOTOS", rawPhotos)))
             .catch(error=>dispatch(createAction("LOAD_PHOTOS_FAILURE", { error })))
     }
 }
 
-export function uploadCameraPhotos(checkedPhotos) {
+export function uploadCameraPhotos(checked) {
     return (dispatch, getState) => {
+        var popupProm = Q.defer();
         Popup.create({
-            content: "Are you sure you want to upload the "+checkedPhotos.length+" you selected?",
+            content: "Are you sure you want to upload "+checked.length+" photos?",
             buttons: {right: [{
-                text: 'No'
+                text: 'No',
+                action: function (Box) {Box.close();}
             }, {
                 text: 'Yes',
                 action: function (Box) {
-                    uploadPhotos(checkedPhotos)
+                    popupProm.resolve();
                     Box.close();
                 }
             }]}
         });
-    }
-}
+        popupProm.promise.then(()=>{
+            const eventCode = getState().events.event.code;
+            const cameraPhotos = getState().events.cameraPhotos;
+            var updater={
+                setListener:function(update){
+                    this.update=update
+                }
+            };
+            var popupId = Popup.create({
+                title:'Uploading Images',
+                content: <ProgressBar updater={updater}></ProgressBar>
+            });
+            var finished = 0, succeeded = [];
+            var allPhotoPromises = checked
+                .map(ind=>()=>api.upload(eventCode, cameraPhotos[ind])
+                    .then(()=>{
+                        succeeded.push(ind);
+                        finished++;
+                        updater.update( Math.ceil((finished/checked.length)*100));
+                    })
+                    .catch(()=>{
+                        finished++;
+                        updater.update( Math.ceil((finished/checked.length)*100));
+                    }));
 
-function uploadPhotos(photos){
-    /*
-    Q.all(checkedPhotos.map(url=>cropImage(url)
-            .then(data=>api.upload(getState().events.event.code, data))
-            .then(()=>{
+            _.reduce(allPhotoPromises, Q.finally, null)
+                .then(()=>{
+                    Popup.close(popupId);
+                    dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter((x,i)=>succeeded.indexOf(i)===-1)))
+                    Popup.create({
+                        title:'Uploading Complete',
+                        content: `Uploaded ${succeeded.length} out of ${finished} photos`,
+                        buttons: {right: ['ok']}
+                    });
+                })
 
-            })
-            .catch(()=>{
-                alert("upload fail")
-            })
-    ))
-        .then(()=>{
-            dispatch(createAction("SET_CAMERA_PHOTOS", []))
         })
-        .catch(error=>dispatch(createAction("UPLOAD_FAILURE", { error })))
-    */
+    }
 }
 
 export function checkIfHasEvent() {

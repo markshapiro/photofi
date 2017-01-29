@@ -19,8 +19,8 @@ export const apiErrorMiddleware = store => next => action => {
   const result = next(action);
   if (result.payload && result.payload.error) {
     const { error } = result.payload;
-    const errName = error.response.data.name || error.response.data.code || error.response.data;
-    const errorKey = result.type +"."+errName.toUpperCase();
+    const errName = error.response.data.name || error.response.data.code || error.response.data.result || error.response.data;
+    const errorKey = result.type +"."+(errName+"").toUpperCase();
     if(errors[errorKey]){
       Popup.create({
         content: errors[errorKey],
@@ -58,3 +58,31 @@ export const logger = createLogger({
   predicate: () =>
   process.env.NODE_ENV === `development`, // eslint-disable-line no-unused-vars
 });
+
+
+
+
+
+
+
+
+/*
+// store.dispatch(alerts.warning('There was an error in your submission: ' + error.data));
+break;
+
+case 401:
+
+// store.dispatch(unauthorized());
+break;
+
+case 404:
+
+//store.dispatch(alerts.warning(
+//   'Sorry, an error has occurred: this action is not available'));
+break;
+
+default:
+
+// store.dispatch(alerts.warning('Sorry, an error has occurred'));
+
+*/

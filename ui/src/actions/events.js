@@ -59,8 +59,9 @@ export function loadNextPhotos() {
 export function loadFromCamera() {
     return dispatch => {
         api.loadPicsFromCamera()
-            .then(rawPhotos=>Q.all(rawPhotos.map(url=>cropImage(url))))
-            .then(rawPhotos=>dispatch(createAction("SET_CAMERA_PHOTOS", rawPhotos)))
+            .then(rawPhotos=>Q.all(rawPhotos.map(url=>cropImage(url)
+                .then(data=>({url,data})))))
+            .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
             .catch(error=>dispatch(createAction("LOAD_PHOTOS_FAILURE", { error })))
     }
 }
@@ -91,17 +92,22 @@ export function uploadCameraPhotos(checked) {
             };
             var popupId = Popup.create({
                 title:'Uploading Images',
-                content: <ProgressBar updater={updater}></ProgressBar>
+                content: <ProgressBar updater={updater}></ProgressBar>,
+                buttons: {right: [{
+                    text: '',
+                    className: 'unclickable-overlay', // optional
+                    action: function (popup) {}
+                }]}
             });
             var finished = 0, succeeded = [];
             var allPhotoPromises = checked
-                .map(ind=>()=>api.upload(eventCode, cameraPhotos[ind])
+                .map(photo=>()=>api.upload(eventCode, photo.data)
                     .then(()=>{
-                        succeeded.push(ind);
+                        succeeded.push(photo)
                         finished++;
                         updater.update( Math.ceil((finished/checked.length)*100));
-                    })
-                    .catch(()=>{
+                        //localStorage.setItem(eventCode+"_"+photo.url,'1');
+                    }).catch(()=>{
                         finished++;
                         updater.update( Math.ceil((finished/checked.length)*100));
                     }));
@@ -133,3 +139,28 @@ export function checkIfHasEvent() {
         }
     }
 }
+
+
+
+
+/*
+
+setTimeout(()=>{
+
+    Popup.create({
+        title: "No Event",
+        content: "Please add or enter existing event",
+        buttons: {right: [{
+            text: '',
+            className: 'unclickable-overlay', // optional
+            action: function (popup) {
+                // do stuff
+                //popup.close();
+            }
+        }]}
+    });
+
+},1000)
+
+
+*/

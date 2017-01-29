@@ -2,11 +2,11 @@ import axios from 'axios';
 import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://api.photofi.co.il";
-//const prefix = "http://localhost:4000";
+//const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
-const flashAirPrefix = "http://flashair";
-//const flashAirPrefix = "http://localhost:5000";
+//const flashAirPrefix = "http://flashair";
+const flashAirPrefix = "http://localhost:5000";
 
 var flickr = new Flickr({
   api_key: "817677ed2b6d78b3e496dc06e3366f29"

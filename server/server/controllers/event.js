@@ -97,7 +97,6 @@ module.exports.uploadImage=function(req, res){
     bufferStream.path = '-';
     var uploadOptions = {
         photos: [{
-            tags: [req.params.eventCode],
             photo: bufferStream
         }]
     };

@@ -86,14 +86,12 @@ export function uploadCameraPhotos(checked) {
             }]}
         });
         const eventCode = getState().events.event.code;
-        const cameraPhotos = getState().events.cameraPhotos;
         popupProm.promise
-            .then(()=>processSeries(checked.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading Images'))
+            .then(()=>processSeries(checked.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading Images', 3, ind=>{
+                localStorage.setItem(eventCode+"_"+checked[ind].url,'1');
+            }))
             .then(result=>checked.map(({url})=>url).filter((x, ind)=>result[ind]))
-            .then(successUrls=>{
-                successUrls.forEach(url=>localStorage.setItem(eventCode+"_"+url,'1'));
-                dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(({url})=>successUrls.indexOf(url)===-1)   ))
-            });
+            .then(successUrls=>dispatch(createAction("SET_CAMERA_PHOTOS", getState().events.cameraPhotos.filter(({url})=>successUrls.indexOf(url)===-1))));
     }
 }
 
@@ -110,7 +108,7 @@ export function checkIfHasEvent() {
     }
 }
 
-function processSeries(promises, title){
+function processSeries(promises, title, numOfSimultaneous, onPromiseSuccess){
     var results = [];
     var updater={setListener:function(update){this.update=update;}};
     var popupId = Popup.create({
@@ -122,16 +120,31 @@ function processSeries(promises, title){
             action: function (popup) {}
         }]}
     });
-    return _.reduce(promises.map(prom=>()=>prom()
+    var promises2reduce = promises.map((prom, i)=>()=>prom()
             .then(value=>{
                 results.push({value});
                 updater.update( Math.ceil((results.length/promises.length)*100));
+                onPromiseSuccess && onPromiseSuccess(i);
             })
             .catch(()=>{
                 results.push(null);
                 updater.update( Math.ceil((results.length/promises.length)*100));
             })
-    ), Q.finally, null)
+    );
+    if(numOfSimultaneous>1){
+        var promisesRemade=[];
+        for(var i=0;i<Math.ceil(promises2reduce.length/numOfSimultaneous);i++){
+            var simultaneous = []
+            for(var k=i*numOfSimultaneous;k<Math.min(promises2reduce.length, (i+1)*numOfSimultaneous);k++){
+                simultaneous.push(promises2reduce[k])
+            }
+            promisesRemade.push((function(){
+                return Q.all(this.map(method=>method()))
+            }).bind(simultaneous))
+        }
+        promises2reduce=promisesRemade;
+    }
+    return _.reduce(promises2reduce, Q.finally, null)
         .then(()=>{
             Popup.create({
                 title:'Process complete',

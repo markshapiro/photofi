@@ -15,7 +15,7 @@ exports.requiresLogin = function(isPhotographer){
 exports.requiresEventOwnership = function(){
     return function(req, res, next) {
         const code = req.event && req.event.code;
-        User.findOne({_id: req.user._id})
+        User.findOne({_id: req.user && req.user._id})
             .then(user=>{
                 if(user.events.filter(d=>d.code === code).length){
                     return next();

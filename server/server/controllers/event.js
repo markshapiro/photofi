@@ -115,7 +115,7 @@ module.exports.uploadImage=function(req, res){
                 return res.status(500).send(err);
             }
             const url  = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}`;
-            (new Photo({url, code:req.event.code, dateupload:photoData.photo.dateuploaded})).save()
+            (new Photo({url, code:req.event.code, dateupload:Math.ceil((new Date()).getTime()/100)})).save()
                 .then(()=>{
                     if(!req.event.starred){
                         req.event.starred = `${url}_h.jpg`;

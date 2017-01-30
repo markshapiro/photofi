@@ -57,7 +57,7 @@ module.exports.update = function(req, res){
 
 module.exports.list = function(req, res){
     User.findOne({_id:req.user._id}, '-salt -hashed_password')
-        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}))
+        .then(user=>Event.find({code:{$in:user.events.map(d=>d.code)}}).sort( { _id: -1 } ))
         .then(events=>res.send(events))
         .catch(err=>{
             logger.error(err);

@@ -61,14 +61,16 @@ export function loadFromCamera() {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCamera()
             .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
-            .then(rawPhotos=>processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images")
-                .then(result=>rawPhotos.map((url, index)=>({url, data: result[index] && result[index].value })).filter(x=>x.data)))
-            .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
+            .then(rawPhotos=>rawPhotos && processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images")
+                .then(result=>rawPhotos.map((url, index)=>({url, data: result[index] && result[index].value })).filter(x=>x.data))
+                .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
+        )
     }
 }
 
 export function uploadCameraPhotos(checked) {
     return (dispatch, getState) => {
+        if(!checked.length){return;}
         var popupProm = Q.defer();
         Popup.create({
             content: "Are you sure you want to upload "+checked.length+" photos?",
@@ -87,7 +89,7 @@ export function uploadCameraPhotos(checked) {
         const cameraPhotos = getState().events.cameraPhotos;
         popupProm.promise
             .then(()=>processSeries(checked.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading Images'))
-            .then(result=>checked.map(({url})=>url).filter((x, ind)=>x))
+            .then(result=>checked.map(({url})=>url).filter((x, ind)=>result[ind]))
             .then(successUrls=>{
                 successUrls.forEach(url=>localStorage.setItem(eventCode+"_"+url,'1'));
                 dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(({url})=>successUrls.indexOf(url)===-1)   ))

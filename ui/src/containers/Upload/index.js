@@ -19,11 +19,9 @@ export class Upload extends Component {
             checked:[]
         };
     }
-
     componentWillReceiveProps(){
         this.setState({checked:[]})
     }
-
     render() {
         return (
             <div className="upload">

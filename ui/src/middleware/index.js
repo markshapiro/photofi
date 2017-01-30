@@ -59,30 +59,3 @@ export const logger = createLogger({
   process.env.NODE_ENV === `development`, // eslint-disable-line no-unused-vars
 });
 
-
-
-
-
-
-
-
-/*
-// store.dispatch(alerts.warning('There was an error in your submission: ' + error.data));
-break;
-
-case 401:
-
-// store.dispatch(unauthorized());
-break;
-
-case 404:
-
-//store.dispatch(alerts.warning(
-//   'Sorry, an error has occurred: this action is not available'));
-break;
-
-default:
-
-// store.dispatch(alerts.warning('Sorry, an error has occurred'));
-
-*/

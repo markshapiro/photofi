@@ -43,7 +43,7 @@ export class Feed extends Component {
                src={require(this.state.showGrid?'./squares.png':'./list.png')} />
           <div className="photos">
             {photos.map((url, index)=>{
-              return <div key={index} className={"img "+(this.state.showGrid?"square":"list")} onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}>
+              return <div key={url} className={"img "+(this.state.showGrid?"square":"list")} onClick={()=>this.state.showGrid && this.setState({showingImg:url+ '_h.jpg'})}>
                   <img src={url+(this.state.showGrid?'_s.jpg':'_h.jpg')}/>
                   {isPhotographer && <i className={'star '+(url+'_h.jpg'===event.starred?"ion-android-star":"ion-android-star-outline")}
                      onClick={e=>{

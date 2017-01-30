@@ -25,7 +25,7 @@ export class Upload extends Component {
     render() {
         return (
             <div className="upload">
-                <button className="load" onClick={()=>this.props.loadFromCamera()}>load from camera</button>
+                <button className="load" onClick={()=>this.props.loadFromCamera()}>load from card</button>
                 <button className="upload" onClick={()=>this.props.uploadCameraPhotos(this.state.checked)}><i className="ion-android-upload"/></button>
                 <div className="photosScroller">
                     {this.props.cameraPhotos.map((photo)=>{

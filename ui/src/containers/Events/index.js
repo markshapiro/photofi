@@ -33,7 +33,7 @@ export class Events extends Component {
                         <div key={index} className="event"
                              style={event.starred ? {background:`url(${event.starred})`} : {}}
                              onClick={()=>this.props.setEvent(event)}>
-                            <div className="evName">{event.name}</div>
+                            <div className="evName Regular">{event.name}</div>
                         </div>)
                     }
                 </div>

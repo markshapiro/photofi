@@ -2,8 +2,8 @@ import axios from 'axios';
 import Q from 'q';
 require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://api.photofi.co.il";
-//const prefix = "http://localhost:4000";
+//const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
 //const flashAirPrefix = "http://flashair";
 const flashAirPrefix = "http://localhost:5000";
@@ -49,24 +49,7 @@ export function upload(code, data) {
 }
 
 export function loadNextPhotos(code, date) {
-  var prom = Q.defer();
-  flickr.photos.search({
-    user_id:"150312554@N02",
-    tags:code,
-    per_page:500,
-    min_upload_date:date,
-    extras:"date_upload"
-  }, function(err, result) {
-    if(!err){
-      result.photos.photo = result.photos.photo.map(({dateupload, farm, server, id, secret})=>({
-        dateupload,
-        url:`https://farm${farm}.static.flickr.com/${server}/${id}_${secret}`
-      }));
-      return prom.resolve(result.photos.photo)
-    }
-    prom.reject(err)
-  });
-  return prom.promise
+  return axios.get(prefix + '/api/event/'+code+'/photos/'+date).then(({data})=>data);
 }
 
 export function loadPicsFromCamera(prefix='/DCIM'){

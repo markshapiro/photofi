@@ -27,14 +27,19 @@ module.exports = function(app) {
 
     app.route('/bookEvent')
         .post(
-            auth.requiresLogin(),
-            eventController.bookEvent);
+        auth.requiresLogin(),
+        eventController.bookEvent);
 
     app.route('/event/:eventCode/upload')
         .post(
             auth.requiresLogin(true),
             auth.requiresEventOwnership(),
             eventController.uploadImage);
+
+    app.route('/event/:code/photos/:date')
+        .get(
+            auth.requiresLogin(),
+            eventController.getPhotos);
 
     app.param('eventCode',eventController.getEventByCode);
 };

@@ -61,7 +61,7 @@ export function loadFromCamera() {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCamera()
             .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
-            .then(rawPhotos=>rawPhotos && processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images")
+            .then(rawPhotos=>rawPhotos && processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images", 2)
                 .then(result=>rawPhotos.map((url, index)=>({url, data: result[index] && result[index].value })).filter(x=>x.data))
                 .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
         )

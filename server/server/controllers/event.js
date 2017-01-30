@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash'),
     logger = require(global.root + '/server/config/logs'),
     User= mongoose.model('User'),
+    Photo = mongoose.model('Photo'),
     config = require(global.root + '/server/config/config'),
     NodeFlickr = require("node-flickr"),
     nodeFlickr = new NodeFlickr(config.flickr);
@@ -108,19 +109,35 @@ module.exports.uploadImage=function(req, res){
             logger.error(err);
             return res.status(500).send(err);
         }
-        if(!req.event.starred){
-            nodeFlickr.get("photos.getInfo", {"photo_id":result[0]}, function(err, photoData){
-                if(photoData.photo){
-                    req.event.starred = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}_h.jpg`;
-                    return req.event.save().finally(()=>res.send(result))
-                }
-                res.send(result);
-            });
-        }
-        else{
-            res.send(result);
-        }
+        nodeFlickr.get("photos.getInfo", {"photo_id":result[0]}, function(err, photoData){
+            if(err || !(photoData && photoData.photo)) {
+                logger.error(err);
+                return res.status(500).send(err);
+            }
+            const url  = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}`;
+            (new Photo({url, code:req.event.code, dateupload:photoData.photo.dateuploaded})).save()
+                .then(()=>{
+                    if(!req.event.starred){
+                        req.event.starred = `${url}_h.jpg`;
+                        return req.event.save()
+                    }
+                })
+                .then(()=>res.send({}))
+                .catch(err=>{
+                    logger.error(err);
+                    return res.status(500).send(err);
+                });
+        });
     });
+};
+
+module.exports.getPhotos=function(req, res){
+    Photo.find({code:req.params.code, dateupload:{$gte:Number(req.params.date)}},{url:1, dateupload:1})
+        .then(photos=>res.send(photos))
+        .catch(err=>{
+            logger.error(err);
+            return res.status(500).send(err);
+        });
 };
 
 module.exports.getEventByCode=function(req, res, next, id){

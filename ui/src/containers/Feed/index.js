@@ -68,7 +68,7 @@ export class Feed extends Component {
   }
 
   share(url){
-    window.plugins.socialsharing.share("", "Share via Photofi", url, null, function () {
+    window.plugins.socialsharing.share(null, "Share via Photofi", url, null, function () {
     }, function () {
     });
   }

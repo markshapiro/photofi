@@ -29,7 +29,7 @@ export class Events extends Component {
                 </div>
 
                 <div className="eventsScroller">
-                    {_.sortBy(_.sortBy(this.props.events.filter(ev=>ev.name.indexOf(this.state.key)>=0), v=>v._id), (v,i)=>i*-1).map((event, index)=>
+                    {_.sortBy(_.sortBy(this.props.events.filter(ev=>ev.name.toLowerCase().indexOf(this.state.key.toLowerCase())>=0), v=>v._id), (v,i)=>i*-1).map((event, index)=>
                         <div key={index} className="event"
                              style={event.starred ? {background:`url(${event.starred})`} : {}}
                              onClick={()=>this.props.setEvent(event)}>

@@ -101,7 +101,7 @@ module.exports.uploadImage=function(req, res){
         }]
     };
     Flickr.upload(uploadOptions, config.flickr, function(err, result) {
-        if(!result.length){
+        if(result && !result.length){
             err = "request successful but could not upload picture";
         }
         if(err) {

@@ -61,38 +61,9 @@ export function loadFromCamera() {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCamera()
             .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
-            .then(rawPhotos=>{
-                var updater={setListener:function(update){this.update=update;}};
-                var popupId = Popup.create({
-                    title:'Fetching Images',
-                    content: <ProgressBar updater={updater}></ProgressBar>,
-                    buttons: {right: [{
-                        text: '',
-                        className: 'unclickable-overlay',
-                        action: function (popup) {}
-                    }]}
-                });
-                var result=[];
-                var allPhotoPromises = rawPhotos
-                    .map(photo=>()=>cropImage(photo)
-                        .then(data=>{
-                            result.push({url:photo, data})
-                            updater.update( Math.ceil((result.length/rawPhotos.length)*100));
-                        }));
-                return _.reduce(allPhotoPromises, Q.finally, null)
-                    .then(()=>result)
-                    .finally(()=>{
-                        Popup.close(popupId);
-                    });
-            })
+            .then(rawPhotos=>processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images")
+                .then(result=>rawPhotos.map((url, index)=>({url, data: result[index] && result[index].value })).filter(x=>x.data)))
             .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
-            .catch(()=>{
-                Popup.create({
-                    title: "Could not get images!",
-                    content: "",
-                    buttons: {right: ['ok']}
-                });
-            })
     }
 }
 
@@ -112,43 +83,15 @@ export function uploadCameraPhotos(checked) {
                 }
             }]}
         });
-        popupProm.promise.then(()=>{
-            const eventCode = getState().events.event.code;
-            const cameraPhotos = getState().events.cameraPhotos;
-            var updater={setListener:function(update){this.update=update;}};
-            var popupId = Popup.create({
-                title:'Uploading Images',
-                content: <ProgressBar updater={updater}></ProgressBar>,
-                buttons: {right: [{
-                    text: '',
-                    className: 'unclickable-overlay',
-                    action: function (popup) {}
-                }]}
+        const eventCode = getState().events.event.code;
+        const cameraPhotos = getState().events.cameraPhotos;
+        popupProm.promise
+            .then(()=>processSeries(checked.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading Images'))
+            .then(result=>checked.map(({url})=>url).filter((x, ind)=>x))
+            .then(successUrls=>{
+                successUrls.forEach(url=>localStorage.setItem(eventCode+"_"+url,'1'));
+                dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(({url})=>successUrls.indexOf(url)===-1)   ))
             });
-            var finished = 0, succeeded = [];
-            var allPhotoPromises = checked
-                .map(photo=>()=>api.upload(eventCode, photo.data)
-                    .then(()=>{
-                        succeeded.push(photo);
-                        finished++;
-                        updater.update( Math.ceil((finished/checked.length)*100));
-                        localStorage.setItem(eventCode+"_"+photo.url,'1');
-                    }).catch(()=>{
-                        finished++;
-                        updater.update( Math.ceil((finished/checked.length)*100));
-                    }));
-
-            _.reduce(allPhotoPromises, Q.finally, null)
-                .then(()=>{
-                    dispatch(createAction("SET_CAMERA_PHOTOS", cameraPhotos.filter(photo=>succeeded.indexOf(photo)===-1)))
-                    Popup.create({
-                        title:'Uploading Complete',
-                        content: `Uploaded ${succeeded.length} out of ${finished} photos`,
-                        buttons: {right: ['ok']}
-                    });
-                })
-                .finally(()=>Popup.close(popupId))
-        })
     }
 }
 
@@ -163,4 +106,37 @@ export function checkIfHasEvent() {
             dispatch(routeActions.push(`/addevent`))
         }
     }
+}
+
+function processSeries(promises, title){
+    var results = [];
+    var updater={setListener:function(update){this.update=update;}};
+    var popupId = Popup.create({
+        title,
+        content: <ProgressBar updater={updater}></ProgressBar>,
+        buttons: {right: [{
+            text: '',
+            className: 'unclickable-overlay',
+            action: function (popup) {}
+        }]}
+    });
+    return _.reduce(promises.map(prom=>()=>prom()
+            .then(value=>{
+                results.push({value});
+                updater.update( Math.ceil((results.length/promises.length)*100));
+            })
+            .catch(()=>{
+                results.push(null);
+                updater.update( Math.ceil((results.length/promises.length)*100));
+            })
+    ), Q.finally, null)
+        .then(()=>{
+            Popup.create({
+                title:'Process complete',
+                content: `Processed ${results.filter(x=>x).length} out of ${results.length}`,
+                buttons: {right: ['ok']}
+            });
+            return results;
+        })
+        .finally(()=>Popup.close(popupId))
 }

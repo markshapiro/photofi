@@ -80,7 +80,7 @@ export function loadPicsFromCamera(prefix='/DCIM'){
           .filter(cols=>cols.length>=2)
           .forEach(cols=>{
             if(cols[2]=='0') proms.push(loadPicsFromCamera(prefix+'/'+cols[1]));
-            else if(cols[1].match(/.(jpg|jpeg|png)$/g)) photos.push(flashAirPrefix+prefix+'/'+cols[1]);
+            else if(cols[1].match(/.(jpg|jpeg|png|JPG|JPEG|PNG)$/g)) photos.push(flashAirPrefix+prefix+'/'+cols[1]);
       });
       return Q.all(proms)
         .then(res=>photos.concat.apply(photos, res))

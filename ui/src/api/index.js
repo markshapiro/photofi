@@ -1,16 +1,11 @@
 import axios from 'axios';
 import Q from 'q';
-require("flickrapi/browser/flickrapi.dev.js");
 
-const prefix = "http://api.photofi.co.il";
-//const prefix = "http://localhost:4000";
+//const prefix = "http://api.photofi.co.il";
+const prefix = "http://localhost:4000";
 
-const flashAirPrefix = "http://flashair";
-//const flashAirPrefix = "http://localhost:5000";
-
-var flickr = new Flickr({
-  api_key: "817677ed2b6d78b3e496dc06e3366f29"
-});
+//const flashAirPrefix = "http://flashair";
+const flashAirPrefix = "http://localhost:5000";
 
 export function login(data) {
   return axios.post(prefix + '/api/user/login', data);
@@ -51,6 +46,9 @@ export function upload(code, data) {
 export function loadNextPhotos(code, date) {
   return axios.get(prefix + '/api/event/'+code+'/photos/'+date).then(({data})=>data);
 }
+
+
+
 
 export function loadPicsFromCamera(prefix='/DCIM'){
   return axios.get(flashAirPrefix+'/command.cgi?op=100&DIR='+prefix)

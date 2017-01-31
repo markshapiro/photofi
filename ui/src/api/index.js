@@ -47,9 +47,6 @@ export function loadNextPhotos(code, date) {
   return axios.get(prefix + '/api/event/'+code+'/photos/'+date).then(({data})=>data);
 }
 
-
-
-
 export function loadPicsFromCamera(prefix='/DCIM'){
   return axios.get(flashAirPrefix+'/command.cgi?op=100&DIR='+prefix)
     .then(result=>{

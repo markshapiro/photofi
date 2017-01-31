@@ -91,6 +91,17 @@ function decodeBase64Image(dataString) {
 }
 
 module.exports.uploadImage=function(req, res){
+
+    setTimeout(()=>{
+
+
+        return res.send({});
+
+    },1000)
+
+
+    return;
+
     var base64Data = req.body.data;
     var imageBuffer = decodeBase64Image(base64Data);
     var bufferStream = streamifier.createReadStream(imageBuffer.data);

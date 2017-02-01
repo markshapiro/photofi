@@ -4,8 +4,8 @@ import Q from 'q';
 const apiPrefix = "http://api.photofi.co.il";
 //const apiPrefix = "http://localhost:4000";
 
-//const wlanPrefix = "http://flashair";
-const wlanPrefix = "http://localhost:5000";
+const wlanPrefix = "http://flashair";
+//const wlanPrefix = "http://localhost:5000";
 
 export function login(data) {
   return axios.post(apiPrefix + '/api/user/login', data);

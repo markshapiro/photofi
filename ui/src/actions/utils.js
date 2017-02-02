@@ -36,7 +36,7 @@ export const shrinkImage = url => {
     canvas.width = width;
     canvas.height = height;
     canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-    prom.reject(canvas.toDataURL("image/jpg", 0.8));
+    prom.resolve(canvas.toDataURL("image/jpg", 0.8));
   };
   img.onerror = function () {
     prom.reject();

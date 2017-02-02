@@ -91,19 +91,6 @@ function decodeBase64Image(dataString) {
 }
 
 module.exports.uploadImage=function(req, res){
-
-    setTimeout(()=>{
-
-
-        //return res.send({});
-
-        return res.status(500).send({});
-
-    },2000)
-
-
-    return;
-
     var base64Data = req.body.data;
     var imageBuffer = decodeBase64Image(base64Data);
     var bufferStream = streamifier.createReadStream(imageBuffer.data);
@@ -127,7 +114,8 @@ module.exports.uploadImage=function(req, res){
                 return res.status(500).send(err);
             }
             const url  = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}`;
-            (new Photo({url, code:req.event.code, dateupload:Math.ceil((new Date()).getTime()/100)})).save()
+            const dateupload = parseInt((new Date()).getTime()/10);
+            (new Photo({url, code:req.event.code, dateupload})).save()
                 .then(()=>{
                     if(!req.event.starred){
                         req.event.starred = `${url}_h.jpg`;

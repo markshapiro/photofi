@@ -27,6 +27,11 @@ export class Upload extends Component {
             buttons: {right: ['ok']}
         });
     }
+    componentWillReceiveProps(){
+       if(this.props.action==='pick'){
+           this.setState({selected:[]})
+       }
+    }
     render() {
         return (
             <div className="upload">
@@ -36,10 +41,10 @@ export class Upload extends Component {
                 }}><i className="ion-refresh"/></div>
 
                 <div className={"btn shrink "+(this.props.action==='upload' && "disabled")}
-                     onClick={()=>this.props.shrinkSelected(this.state.selected)}><i className="ion-arrow-shrink"/></div>
+                     onClick={()=>this.props.action==='pick' && this.props.shrinkSelected(this.state.selected)}><i className="ion-arrow-shrink"/></div>
 
                 <div className={"btn upload "+(this.props.action==='pick' && "disabled")}
-                     onClick={()=>this.props.uploadCardPhotos()}><i className="ion-android-upload"/></div>
+                     onClick={()=>this.props.action==='upload' && this.props.uploadCardPhotos()}><i className="ion-android-upload"/></div>
 
                 <div className="photosScroller">
                     {this.props.cardPhotos.map((photo)=>{

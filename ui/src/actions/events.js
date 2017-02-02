@@ -60,7 +60,7 @@ export function loadFromCard() {
     return (dispatch, getState) => {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCard()
-            .then(photoList=>photoList.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
+            //.then(photoList=>photoList.filter(({url})=>!localStorage.getItem(eventCode+"_"+url)))
             .then(photoList=>{
                 dispatch(createAction("SET_CARD_PHOTOS", photoList))
                 dispatch(createAction("SET_UPLOAD_ACTION", 'pick'))
@@ -90,6 +90,9 @@ export function uploadCardPhotos() {
         const photos = getState().events.cardPhotos;
         const eventCode = getState().events.event.code;
         photos.length && processSeries(photos.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading images', "Upload completed", "", 3, ind=>{
+
+            console.log(eventCode+"_"+photos[ind].url)
+
             localStorage.setItem(eventCode+"_"+photos[ind].url,'1');
         })
         .then(()=>dispatch(loadFromCard()));

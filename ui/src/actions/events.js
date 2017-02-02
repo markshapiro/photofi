@@ -60,7 +60,7 @@ export function loadFromCard() {
     return (dispatch, getState) => {
         const eventCode = getState().events.event.code;
         api.loadPicsFromCard()
-            //.then(photoList=>photoList.filter(({url})=>!localStorage.getItem(eventCode+"_"+url)))
+            .then(photoList=>photoList.filter(({url})=>!localStorage.getItem(eventCode+"_"+url)))
             .then(photoList=>{
                 dispatch(createAction("SET_CARD_PHOTOS", photoList))
                 dispatch(createAction("SET_UPLOAD_ACTION", 'pick'))

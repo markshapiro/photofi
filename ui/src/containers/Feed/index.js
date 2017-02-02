@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Popup from 'react-popup';
 
 require('./style.less');
 
@@ -57,28 +58,57 @@ export class Feed extends Component {
          <div className={"imgEnlarge "+(this.state.showingImg && "showing")}
               style={{'backgroundImage':'url('+this.state.showingImg+')'}}
               onClick={()=>this.setState({showingImg:null})}>
-            <i className="ion-share" onClick={e=>{
+             <i className="ion-share" onClick={e=>{
               e.preventDefault();
               e.stopPropagation();
               this.share(this.state.showingImg);
+            }}/>
+             <i className="ion-android-download" onClick={e=>{
+              e.preventDefault();
+              e.stopPropagation();
+              this.download(this.state.showingImg);
             }}/>
           </div>
         </div>
     )
   }
 
-  share(url){
-      window.plugins.socialsharing.shareWithOptions({
-          message: 'Share via Photofi',
-          subject: 'Share via Photofi',
-          files: [url],
-          url: url
-      }, ()=>{}, ()=>{});
-  }
+    share(url){
+        window.plugins.socialsharing.shareWithOptions({
+            message: 'Share via Photofi',
+            subject: 'Share via Photofi',
+            files: [url],
+            url: url
+        }, ()=>{}, ()=>{});
+    }
 
-  toggleViewType(){
-    this.setState({
-      showGrid:!this.state.showGrid
-    })
-  }
+    toggleViewType(){
+        this.setState({
+            showGrid:!this.state.showGrid
+        })
+    }
+
+    download(url){
+        var img = new Image();
+        img.setAttribute('crossOrigin', 'anonymous');
+        img.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+            //canvas.toDataURL("image/jpg", 1.0)
+            var params = {
+                data: canvas.toDataURL("image/jpg", 1.0),
+                prefix: 'myPrefix_', format: 'JPG', quality: 100, mediaScanner: true
+            };
+            window.imageSaver.saveBase64Image(params,
+                function (filePath) {
+                    Popup.create({
+                        content: "file saved.",
+                        buttons: {right: ['ok']}
+                    });
+                },
+                function (msg) {})
+        };
+        img.onerror = function () {};
+        img.src = url;
+    }
 }

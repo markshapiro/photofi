@@ -23,12 +23,7 @@ var EventBookingSchema = new Schema({
     "userId": {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
-    "isPhotographer": {
-        type: Boolean,
-        default:false,
-        required: true
-    },
+    }
 });
 
 mongoose.model('EventBooking', EventBookingSchema);

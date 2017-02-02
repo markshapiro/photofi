@@ -11,7 +11,7 @@ var EventLogSchema = new Schema({
     "data": Schema.Types.Mixed,
     created: {
         type: Date,
-        required: false,
+        required: true,
         default: Date.now
     }
 });

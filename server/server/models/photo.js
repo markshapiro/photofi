@@ -16,10 +16,11 @@ var PhotoSchema = new Schema({
     },
     "dateupload": {
         type: Number,
-        required: true
+        required: true,
+        integer: true
     }
 });
 
-PhotoSchema.index({code: 1, dateupload: -1}, {unique: true});
+PhotoSchema.index({code: 1, dateupload: -1});
 
 mongoose.model('Photo', PhotoSchema);

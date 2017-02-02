@@ -1,4 +1,4 @@
-import { createAction, cropImage } from './utils';
+import { createAction, shrinkImage } from './utils';
 import * as api from '../api';
 import { routeActions } from 'redux-simple-router';
 import Q from 'q';
@@ -56,42 +56,43 @@ export function loadNextPhotos() {
     }
 }
 
-export function loadFromCamera() {
+export function loadFromCard() {
     return (dispatch, getState) => {
         const eventCode = getState().events.event.code;
-        api.loadPicsFromCamera()
-            .then(rawPhotos=>rawPhotos.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
-            .then(rawPhotos=>rawPhotos && processSeries(rawPhotos.map(photo=>()=>cropImage(photo)), "Loading images", 2)
-                .then(result=>rawPhotos.map((url, index)=>({url, data: result[index] && result[index].value })).filter(x=>x.data))
-                .then(photos=>dispatch(createAction("SET_CAMERA_PHOTOS", photos)))
-        )
-    }
+        api.loadPicsFromCard()
+            .then(photoList=>photoList.filter(url=>!localStorage.getItem(eventCode+"_"+url)))
+            .then(photoList=>{
+                dispatch(createAction("SET_CARD_PHOTOS", photoList))
+                dispatch(createAction("SET_UPLOAD_ACTION", 'pick'))
+            })
+    };
 }
 
-export function uploadCameraPhotos(checked) {
-    return (dispatch, getState) => {
-        if(!checked.length){return;}
-        var popupProm = Q.defer();
-        Popup.create({
-            content: "Are you sure you want to upload "+checked.length+" photos?",
-            buttons: {right: [{
-                text: 'No',
-                action: function (Box) {Box.close();}
-            }, {
-                text: 'Yes',
-                action: function (Box) {
-                    popupProm.resolve();
-                    Box.close();
+export function shrinkSelected(selected) {
+    return dispatch => {
+        selected.length && processSeries(selected.map(photo=>()=>shrinkImage(photo.url)), "Minimizing images", "Minimize completed",
+            "Before you press red button to upload, make sure you have internet connection.", 6)
+            .then(result=>selected.map((chck, index)=>Object.assign({},chck,{ data: result[index] && result[index].value})).filter(x=>x.data))
+            .then(photos=>{
+                if(photos.length){
+                    dispatch(createAction("SET_CARD_PHOTOS", photos));
+                    dispatch(createAction("SET_UPLOAD_ACTION", 'upload'));
                 }
-            }]}
-        });
+                else{
+                    dispatch(loadFromCard());
+                }
+            });
+    };
+}
+
+export function uploadCardPhotos() {
+    return (dispatch, getState) => {
+        const photos = getState().events.cardPhotos;
         const eventCode = getState().events.event.code;
-        popupProm.promise
-            .then(()=>processSeries(checked.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading Images', 3, ind=>{
-                localStorage.setItem(eventCode+"_"+checked[ind].url,'1');
-            }))
-            .then(result=>checked.map(({url})=>url).filter((x, ind)=>result[ind]))
-            .then(successUrls=>dispatch(createAction("SET_CAMERA_PHOTOS", getState().events.cameraPhotos.filter(({url})=>successUrls.indexOf(url)===-1))));
+        photos.length && processSeries(photos.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading images', "Upload completed", "", 3, ind=>{
+            localStorage.setItem(eventCode+"_"+photos[ind].url,'1');
+        })
+        .then(()=>dispatch(loadFromCard()));
     }
 }
 
@@ -108,7 +109,7 @@ export function checkIfHasEvent() {
     }
 }
 
-function processSeries(promises, title, numOfSimultaneous, onPromiseSuccess){
+function processSeries(promises, title, endingTitle, endingMessage, numOfSimultaneous, onPromiseSuccess){
     var results = [];
     var updater={setListener:function(update){this.update=update;}};
     var popupId = Popup.create({
@@ -116,7 +117,7 @@ function processSeries(promises, title, numOfSimultaneous, onPromiseSuccess){
         content: <ProgressBar updater={updater}></ProgressBar>,
         buttons: {right: [{
             text: '',
-            className: 'unclickable-overlay',
+            className: 'blocking-popup',
             action: function (popup) {}
         }]}
     });
@@ -147,8 +148,8 @@ function processSeries(promises, title, numOfSimultaneous, onPromiseSuccess){
     return _.reduce(promises2reduce, Q.finally, null)
         .then(()=>{
             Popup.create({
-                title:'Process complete',
-                content: `Processed ${results.filter(x=>x).length} out of ${results.length}`,
+                title:endingTitle,
+                content: <div>{`Processed ${results.filter(x=>x).length} out of ${results.length}`} {endingMessage && <div>{endingMessage}</div>}</div>,
                 buttons: {right: ['ok']}
             });
             return results;

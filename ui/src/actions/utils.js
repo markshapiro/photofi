@@ -13,7 +13,7 @@ export const bindAllActionCreators = (actionCreators, dispatch) => {
   }, {});
 };
 
-export const cropImage = url => {
+export const shrinkImage = url => {
   var prom = Q.defer();
   var img = new Image();
   const MAX_SIZE = 500;
@@ -36,7 +36,7 @@ export const cropImage = url => {
     canvas.width = width;
     canvas.height = height;
     canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-    prom.resolve(canvas.toDataURL("image/jpg", 0.8));
+    prom.reject(canvas.toDataURL("image/jpg", 0.8));
   };
   img.onerror = function () {
     prom.reject();

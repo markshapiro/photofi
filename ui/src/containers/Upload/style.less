@@ -1,27 +1,23 @@
-
 .upload {
-  button{
-    vertical-align: top;
-
-    border:0px;
-    border-radius:10px;
-    &.load{
-      width:80%;
-      background:#DB4A41;
-      float:left;
-      color:white;
-      font-size:22px;
-      height: 50px;
+  .btn{
+    width:33%;
+    border-radius:6px;
+    height: 40px;
+    &.refresh{
+      background:#414ADB;
+    }
+    &.shrink{
+      background:#4ADB41;
     }
     &.upload{
-      width:20%;
-      background:#414ADB;
-      float:right;
-      height: 50px;
-      .ion-android-upload{
-        color:white;
-        font-size:32px;
-      }
+      background:#DB4A41;
+    }
+    &.disabled{
+      background:#DBDBDB;
+    }
+    i{
+      color:white;
+      font-size:25px;
     }
   }
   .photosScroller {

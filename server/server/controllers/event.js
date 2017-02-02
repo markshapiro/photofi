@@ -95,9 +95,11 @@ module.exports.uploadImage=function(req, res){
     setTimeout(()=>{
 
 
-        return res.send({});
+        //return res.send({});
 
-    },1000)
+        return res.status(500).send({});
+
+    },2000)
 
 
     return;

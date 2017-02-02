@@ -5,7 +5,8 @@ const initialState = {
     events:[],
     photos:[],
     lastFetchTime:0,
-    cameraPhotos:[]
+    cardPhotos:[],
+    action:"pick"
 };
 
 export function events(state = initialState, action) {
@@ -16,22 +17,28 @@ export function events(state = initialState, action) {
                   event: action.payload,
                   photos:[],
                   lastFetchTime:0,
-                  cameraPhotos:[]
+                  cardPhotos:[],
+                  action:"pick"
               });
       case "SET_PAST_EVENTS":
           return Object.assign({},
               state, {
                   events: action.payload.events
               });
-      case "SET_CAMERA_PHOTOS":
+      case "SET_CARD_PHOTOS":
           return Object.assign({},
               state, {
-                  cameraPhotos: action.payload
+                  cardPhotos: action.payload
+              });
+      case "SET_UPLOAD_ACTION":
+          return Object.assign({},
+              state, {
+                  action: action.payload,
               });
       case "ADD_PHOTOS":
           return Object.assign({},
               state, {
-                  photos: _.uniq(action.payload.map(d=>d.url).concat(state.photos)),
+                  photos: _.uniq(action.payload.map(({url})=>url).concat(state.photos)),
                   lastFetchTime: action.payload.length
                       ? Number(action.payload[0].dateupload)+1
                       : state.lastFetchTime

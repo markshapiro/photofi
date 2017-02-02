@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Q from 'q';
 
-const apiPrefix = "http://api.photofi.co.il";
-//const apiPrefix = "http://localhost:4000";
+//const apiPrefix = "http://api.photofi.co.il";
+const apiPrefix = "http://localhost:4000";
 
-const wlanPrefix = "http://flashair";
-//const wlanPrefix = "http://localhost:5000";
+//const wlanPrefix = "http://flashair";
+const wlanPrefix = "http://localhost:5000";
 
 export function login(data) {
   return axios.post(apiPrefix + '/api/user/login', data);
@@ -47,7 +47,7 @@ export function loadNextPhotos(code, date) {
   return axios.get(apiPrefix + '/api/event/'+code+'/photos/'+date).then(({data})=>data);
 }
 
-export function loadPicsFromCamera(prefix='/DCIM'){
+export function loadPicsFromCard(prefix='/DCIM'){
   return axios.get(wlanPrefix+'/command.cgi?op=100&DIR='+prefix)
     .then(result=>{
       var photos=[];
@@ -57,8 +57,11 @@ export function loadPicsFromCamera(prefix='/DCIM'){
           .map(row=>row.split(','))
           .filter(cols=>cols.length>=2)
           .forEach(cols=>{
-            if(cols[2]=='0') proms.push(loadPicsFromCamera(prefix+'/'+cols[1]));
-            else if(cols[1].match(/.(jpg|jpeg|png|JPG|JPEG|PNG)$/g)) photos.push(wlanPrefix+prefix+'/'+cols[1]);
+            if(cols[2]=='0') proms.push(loadPicsFromCard(prefix+'/'+cols[1]));
+            else if(cols[1].match(/.(jpg|jpeg|png|JPG|JPEG|PNG)$/g)) photos.push({
+              url:wlanPrefix+prefix+'/'+cols[1],
+              thumb:wlanPrefix+'/thumbnail.cgi?'+prefix+'/'+cols[1]
+            });
       });
       return Q.all(proms)
         .then(res=>photos.concat.apply(photos, res))

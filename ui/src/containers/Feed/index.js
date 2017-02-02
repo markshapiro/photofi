@@ -79,7 +79,11 @@ export class Feed extends Component {
             subject: 'Share via Photofi',
             files: [url],
             url: url
-        }, ()=>{}, ()=>{});
+        }, ()=>{
+            this.onShareFinish("Image shared successfully.");
+        }, ()=>{
+            this.onShareFinish("Image could not be shared");
+        });
     }
 
     toggleViewType(){
@@ -91,7 +95,7 @@ export class Feed extends Component {
     download(url){
         var img = new Image();
         img.setAttribute('crossOrigin', 'anonymous');
-        img.onload = function () {
+        img.onload = () => {
             var canvas = document.createElement('canvas');
             canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
             //canvas.toDataURL("image/jpg", 1.0)
@@ -100,15 +104,24 @@ export class Feed extends Component {
                 prefix: 'myPrefix_', format: 'JPG', quality: 100, mediaScanner: true
             };
             window.imageSaver.saveBase64Image(params,
-                function (filePath) {
-                    Popup.create({
-                        content: "file saved.",
-                        buttons: {right: ['ok']}
-                    });
+                (filePath) => {
+                    this.onShareFinish("Image saved successfully.");
                 },
-                function (msg) {})
+                (msg) => {
+                    this.onShareFinish("Image could not be saved.");
+                })
         };
-        img.onerror = function () {};
+        img.onerror = () => {
+            this.onShareFinish("Image could not be saved.");
+        };
         img.src = url;
+    }
+
+    onShareFinish(title){
+        this.setState({showingImg:null});
+        Popup.create({
+            content: title,
+            buttons: {right: ['ok']}
+        });
     }
 }

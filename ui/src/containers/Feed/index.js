@@ -97,8 +97,10 @@ export class Feed extends Component {
         img.setAttribute('crossOrigin', 'anonymous');
         img.onload = () => {
             var canvas = document.createElement('canvas');
+            var ctx =  canvas.getContext('2d');
+            ctx.canvas.width  = img.width;
+            ctx.canvas.height = img.height;
             canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-            //canvas.toDataURL("image/jpg", 1.0)
             var params = {
                 data: canvas.toDataURL("image/jpg", 1.0),
                 prefix: 'myPrefix_', format: 'JPG', quality: 100, mediaScanner: true

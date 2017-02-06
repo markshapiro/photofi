@@ -11,6 +11,11 @@ module.exports = function(app) {
             passport.authenticate('user-regular-strategy'),
             userController.login);
 
+    app.route('/user/fblogin')
+        .post(
+            passport.authenticate('user-facebook-strategy'),
+            userController.login);
+
     app.route('/user/register')
         .post(
             userController.register);

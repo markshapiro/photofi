@@ -16,10 +16,10 @@ export class LogIn extends Component {
   constructor(props){
     super(props);
     this.state={
-      intent:null,
-      name: localStorage.getItem("name"),
-      email:"",
-      password:localStorage.getItem("password")
+      intent: null,
+      name: "",
+      email: "",
+      password: ""
     };
   }
 
@@ -55,6 +55,9 @@ export class LogIn extends Component {
             !this.state.intent
               ?this.setState({intent:'signup'})
               :this.signup()}}>{!this.state.intent?'+ Sign Up':'Submit'}</button>
+            {!this.state.intent && <button className={"button fbBtn "+(this.state.intent && 'raise')} onClick={()=>this.fblogin()}>
+              <i className="ion-social-facebook" />&nbsp;&nbsp;<span className="lbl">Facebook Login</span>
+            </button>}
             {!this.state.intent &&
               <div className="txtCentered signInLbl Regular" onClick={()=>this.setState({intent:'signin'})}>
                 <span className="lightGrey">Already have an account?</span>&nbsp;
@@ -65,9 +68,22 @@ export class LogIn extends Component {
     )
   }
 
+  fblogin(){
+    return this.props.fblogin({
+      "fbid":"-1079454755514036",
+      "accessToken":"EAADq66AfGH0BAGxi4ZBgDcMmst04FGErOpXEHukZBDcdDlnMtzsC0sK24xlZBzJWZAWiJH4gh6uHZAzy9A8pk1cC7MHxKYGn67HFpdZAZBUZCOKsCeEBVqo93UpJKeTSIo0isBIltUS77Nrsnmtjj2J6Arpbkb1ZCEqFlmZBOIxflin8wBlj9zehNVcjsqZAaso6E8vrZC3VkZCB6juKqmwjpm3Xo"
+    });
+
+    facebookConnectPlugin.login([], ({authResponse})=>{
+      this.props.login({fbid:authResponse.userID, accessToken:authResponse.accessToken});
+    }, ()=>{
+      facebookConnectPlugin.logout(()=>{
+        this.fblogin();
+      });
+    });
+  }
+
   signup(){
-    localStorage.setItem("name", this.state.name)
-    localStorage.setItem("password", this.state.password)
     if(this.state.intent==='signin'){
       this.props.login({name: this.state.name, password: this.state.password});
     }

@@ -1,14 +1,18 @@
 import axios from 'axios';
 import Q from 'q';
 
-const apiPrefix = "http://api.photofi.co.il";
-//const apiPrefix = "http://localhost:4000";
+//const apiPrefix = "http://api.photofi.co.il";
+const apiPrefix = "http://localhost:4000";
 
 const wlanPrefix = "http://flashair";
 //const wlanPrefix = "http://localhost:5000";
 
 export function login(data) {
   return axios.post(apiPrefix + '/api/user/login', data);
+}
+
+export function fblogin(data) {
+  return axios.post(apiPrefix + '/api/user/fblogin', data);
 }
 
 export function events() {

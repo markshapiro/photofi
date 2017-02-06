@@ -9,14 +9,25 @@ var UserSchema = new Schema({
     "email": {
         type: String,
         index: true,
+        unique:true,
         maxlength: 30,
-        required: true
+        required: true,
+        validate: [value=>value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g)]
     },
     "name": {
         type: String,
         index: true,
+        unique:true,
         maxlength: 20,
-        required: true
+        required: true,
+        validate: [value=>value.match(/^[a-z0-9]+$/g)]
+    },
+    "fbid": {
+        type: String,
+        index: true,
+        maxlength: 30,
+        required: false,
+        default:null
     },
     "events":[
         {

@@ -12,6 +12,7 @@ const errors={
   'ADD_EVENT_FAILURE.NO_RECORD':'Could not find event matching your code',
   'CREATE_EVENT_FAILURE.VALIDATIONERROR':'Please enter event with alphanumeric code',
   'CREATE_EVENT_FAILURE.11000':'Event with such code already exists',
+  'LOGIN_FAILURE.INVALID_FB_TOKEN\n':'Could not login with facebook'
 };
 
 // should catch any API errors and act accordingly

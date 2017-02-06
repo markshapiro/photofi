@@ -3,12 +3,13 @@ var mongoose = require('mongoose'),
     config = require('./config'),
     logger = require(global.root + '/server/config/logs'),
     User = mongoose.model('User'),
+    needle = require('needle'),
     passport = require('passport');
 
 module.exports = function() {
 
     passport.serializeUser(function (user, done) {
-        done(null,user);
+        done(null, user);
     });
 
     passport.deserializeUser(function (user, done) {
@@ -20,7 +21,7 @@ module.exports = function() {
             passwordField: 'password'
         },
         function(name, password, done) {
-            User.findOne({name}, function(err, account) {
+            User.findOne({name, fbid:null}, function(err, account) {
                 if (err) {
                     logger.error(err);
                     return done(err);
@@ -39,4 +40,27 @@ module.exports = function() {
             });
         }
     ));
+
+    passport.use('user-facebook-strategy',new LocalStrategy({
+        usernameField: 'fbid',
+        passwordField: 'accessToken'
+    },
+    function(fbid, accessToken, done) {
+        var theUrl = "https://graph.facebook.com/me?access_token=" + accessToken;
+        needle.get(theUrl, function (e, r, body) {
+            if (body && body.id === fbid) {         //verify user id from fb data same as given user id
+                return User.findOne({fbid})
+                    .then(user=>{
+                        if(!user){
+                            var name = "fb"+(new Date()).getTime();
+                            return (new User({fbid, name, email:name+"@photofi.co.il", password:""})).save();
+                        }
+                        return user
+                    })
+                    .then(user=>done(null, user))
+                    .catch(err=>done(err));
+            }
+            return done('INVALID_FB_TOKEN');
+        });
+    }));
 };

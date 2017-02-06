@@ -35,17 +35,11 @@ export class Upload extends Component {
     render() {
         return (
             <div className="upload">
-                <div className="btn refresh" onClick={()=>{
-                    this.props.loadFromCard();
-
-                }}><i className="ion-refresh"/></div>
-
-                <div className={"btn shrink "+(this.props.action==='upload' && "disabled")}
+                <div className="upperBtn refresh" onClick={()=>this.props.loadFromCard()}><i className="ion-refresh"/></div>
+                <div className={"upperBtn shrink "+(this.props.action==='upload' && "disabled")}
                      onClick={()=>this.props.action==='pick' && this.props.shrinkSelected(this.state.selected)}><i className="ion-arrow-shrink"/></div>
-
-                <div className={"btn upload "+(this.props.action==='pick' && "disabled")}
+                <div className={"upperBtn upload "+(this.props.action==='pick' && "disabled")}
                      onClick={()=>this.props.action==='upload' && this.props.uploadCardPhotos()}><i className="ion-android-upload"/></div>
-
                 <div className="photosScroller">
                     {this.props.cardPhotos.map((photo)=>{
                         const selected = this.state.selected.indexOf(photo)>=0;
@@ -54,7 +48,7 @@ export class Upload extends Component {
                                     ?_.without(this.state.selected, photo)
                                     :this.state.selected.concat(photo)
                             })}>
-                            <img src={photo.thumb}/>
+                            <img src={photo.data || photo.thumb}/>
                             {this.props.action==='pick' && <i className={"star ion-android-checkbox-outline"+(!selected ? '-blank' : '')}  />}
                         </div>
                     })}

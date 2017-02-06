@@ -58,9 +58,9 @@ module.exports = function() {
                         return user
                     })
                     .then(user=>done(null, user))
-                    .catch(err=>done(err));
+                    .catch(err=>done(null, err));
             }
-            return done('INVALID_FB_TOKEN');
+            return done(null,false,'INVALID_FB_TOKEN');
         });
     }));
 };

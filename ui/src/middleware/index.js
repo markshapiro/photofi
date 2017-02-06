@@ -12,7 +12,7 @@ const errors={
   'ADD_EVENT_FAILURE.NO_RECORD':'Could not find event matching your code',
   'CREATE_EVENT_FAILURE.VALIDATIONERROR':'Please enter event with alphanumeric code',
   'CREATE_EVENT_FAILURE.11000':'Event with such code already exists',
-  'LOGIN_FAILURE.INVALID_FB_TOKEN\n':'Could not login with facebook'
+  'FB_LOGIN_FAILURE.UNAUTHORIZED':'Could not login with facebook'
 };
 
 // should catch any API errors and act accordingly
@@ -22,6 +22,9 @@ export const apiErrorMiddleware = store => next => action => {
     const { error } = result.payload;
     const errName = error.response.data.name || error.response.data.code || error.response.data.result || error.response.data;
     const errorKey = result.type +"."+(errName+"").toUpperCase();
+
+    console.log(errorKey)
+
     if(errors[errorKey]){
       Popup.create({
         content: errors[errorKey],

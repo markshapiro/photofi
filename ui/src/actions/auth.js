@@ -29,7 +29,7 @@ export function fblogin(data) {
             })
             .catch(error => {
                 localStorage.setItem("lastLoginMethod", "");
-                dispatch(createAction("LOGIN_FAILURE", { error }))
+                dispatch(createAction("FB_LOGIN_FAILURE", { error }))
             });
     };
 }

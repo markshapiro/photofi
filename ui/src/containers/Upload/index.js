@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Popup from 'react-popup';
+import { findDOMNode } from 'react-dom';
 
 require('./style.less');
 
@@ -23,7 +24,7 @@ export class Upload extends Component {
     componentWillMount(){
         this.props.loadFromCard();
         this.props.event.code && Popup.create({
-            content: "Select photos you'd like to upload and press green button to minify them first.",
+            content: "Select photos you'd like to upload and press green button to minify them first, if you want to add logo then press orange button and select image before you minify.",
             buttons: {right: ['ok']}
         });
     }
@@ -32,12 +33,40 @@ export class Upload extends Component {
            this.setState({selected:[]})
        }
     }
+
+    onLogoUpload(){
+        var file = findDOMNode(this.refs.logo).files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = event=>{
+            var image  = new Image();
+            image.src    = event.target.result;
+            image.onload = ()=>{
+                if(image.width>250 || image.width>250){
+                    Popup.create({
+                        content: "Please select logo image smaller than 250 pixels in width or height",
+                        buttons: {right: ['ok']}
+                    });
+                    return;
+                }
+                this.setState({logo:image})
+            };
+        }
+    }
+
     render() {
         return (
             <div className="upload">
                 <div className="upperBtn refresh" onClick={()=>this.props.loadFromCard()}><i className="ion-refresh"/></div>
+                <div className="upperBtn logo">
+                    <i className="ion-image" >
+
+                        {this.state.logo && <i className="ion-checkmark checkmark"/>}
+                    </i>
+                    <input className="innerUpload" type="file" ref="logo" onChange={()=>this.onLogoUpload()} />
+                </div>
                 <div className={"upperBtn shrink "+(this.props.action==='upload' && "disabled")}
-                     onClick={()=>this.props.action==='pick' && this.props.shrinkSelected(this.state.selected)}><i className="ion-arrow-shrink"/></div>
+                     onClick={()=>this.props.action==='pick' && this.props.shrinkSelected(this.state.selected, this.state.logo)}><i className="ion-arrow-shrink"/></div>
                 <div className={"upperBtn upload "+(this.props.action==='pick' && "disabled")}
                      onClick={()=>this.props.action==='upload' && this.props.uploadCardPhotos()}><i className="ion-android-upload"/></div>
                 <div className="photosScroller">

@@ -13,7 +13,7 @@ export const bindAllActionCreators = (actionCreators, dispatch) => {
   }, {});
 };
 
-export const shrinkImage = url => {
+export const shrinkImage = (url, logo) => {
   var prom = Q.defer();
   var img = new Image();
   const MAX_SIZE = 500;
@@ -36,26 +36,10 @@ export const shrinkImage = url => {
     canvas.width = width;
     canvas.height = height;
     canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-
-
-
-
-
-
-    var logoImg = new Image();
-    logoImg.setAttribute('crossOrigin', 'anonymous');
-    logoImg.onload = function () {
-      canvas.getContext('2d').drawImage(logoImg, width - logoImg.width, height - logoImg.height, logoImg.width, logoImg.height);
-      prom.resolve(canvas.toDataURL("image/jpg", 0.8));
-    };
-    logoImg.onerror = function () {
-      prom.reject();
-    };
-    logoImg.src = "http://www.clker.com/cliparts/j/s/v/4/S/k/coming-soon-stamp-md.png";
-
-
-
-
+    if(logo){
+      canvas.getContext('2d').drawImage(logo, width - logo.width, height - logo.height, logo.width, logo.height);
+    }
+    prom.resolve(canvas.toDataURL("image/jpg", 0.8));
   };
   img.onerror = function () {
     prom.reject();

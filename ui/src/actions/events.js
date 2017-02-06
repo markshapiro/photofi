@@ -68,9 +68,9 @@ export function loadFromCard() {
     };
 }
 
-export function shrinkSelected(selected) {
+export function shrinkSelected(selected, logo) {
     return dispatch => {
-        selected.length && processSeries(selected.map(photo=>()=>shrinkImage(photo.url)), "Minimizing images", "Minimize completed",
+        selected.length && processSeries(selected.map(photo=>()=>shrinkImage(photo.url, logo)), "Minimizing images", "Minimize completed",
             "Before you press red button to upload, make sure you have internet connection.", 2)
             .then(result=>selected.map((chck, index)=>Object.assign({},chck,{ data: result[index] && result[index].value})).filter(x=>x.data))
             .then(photos=>{

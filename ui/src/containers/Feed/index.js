@@ -75,7 +75,11 @@ export class Feed extends Component {
 
     share(url){
         if(navigator.userAgent.toLowerCase().indexOf("android")===-1){
-            window.plugins.socialsharing.share(null, null, url, null);
+            window.plugins.socialsharing.share(null, null, url, null, ()=>{
+                this.onShareFinish("Image shared successfully.");
+            }, ()=>{
+                this.onShareFinish("Image could not be shared");
+            });
         }
         else{
             window.plugins.socialsharing.shareWithOptions({

@@ -59,8 +59,7 @@ export class Upload extends Component {
             <div className="upload">
                 <div className="upperBtn refresh" onClick={()=>this.props.loadFromCard()}><i className="ion-refresh"/></div>
                 <div className="upperBtn logo">
-                    <i className="ion-image" >
-
+                    <i className="ion-image">
                         {this.state.logo && <i className="ion-checkmark checkmark"/>}
                     </i>
                     <input className="innerUpload" type="file" ref="logo" onChange={()=>this.onLogoUpload()} />

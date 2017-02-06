@@ -74,16 +74,21 @@ export class Feed extends Component {
   }
 
     share(url){
-        window.plugins.socialsharing.shareWithOptions({
-            message: 'Share via Photofi',
-            subject: 'Share via Photofi',
-            files: [url],
-            url: url
-        }, ()=>{
-            this.onShareFinish("Image shared successfully.");
-        }, ()=>{
-            this.onShareFinish("Image could not be shared");
-        });
+        if(navigator.userAgent.toLowerCase().indexOf("android")===-1){
+            window.plugins.socialsharing.share(null, null, url, null);
+        }
+        else{
+            window.plugins.socialsharing.shareWithOptions({
+                message: 'Share via Photofi',
+                subject: 'Share via Photofi',
+                files: [url],
+                url: url
+            }, ()=>{
+                this.onShareFinish("Image shared successfully.");
+            }, ()=>{
+                this.onShareFinish("Image could not be shared");
+            });
+        }
     }
 
     toggleViewType(){

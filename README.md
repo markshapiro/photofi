@@ -9,9 +9,19 @@ Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server
 
 1) logs in with facebook or regular login
 
-2) enters event code textually or by scanning QR code
+2) enters event invitation code textually or by scanning QR code
 
 3) enters event feed that polls for photo updates, can share & save photos.
 
 #### Photographer flow: (more interesting)
 
+1) enters event like regular customer
+
+2) connects to wireless lan card (FlashAir™) containing camera photos
+
+3) lists all photos and selects photos he wants to upload
+
+4) selects his logo image to add under each photo
+
+5) photos are shrinked to reduce size, logo attached, and result is uploaded as Base64
+[`link to photo upload code`](https://github.com/markshapiro/photofi/blob/master/server/server/controllers/event.js#L93)

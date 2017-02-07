@@ -90,9 +90,6 @@ export function uploadCardPhotos() {
         const photos = getState().events.cardPhotos;
         const eventCode = getState().events.event.code;
         photos.length && processSeries(photos.map(photo=>()=>api.upload(eventCode, photo.data)), 'Uploading images', "Upload completed", "", 3, ind=>{
-
-            console.log(eventCode+"_"+photos[ind].url)
-
             localStorage.setItem(eventCode+"_"+photos[ind].url,'1');
         })
         .then(()=>dispatch(loadFromCard()));

@@ -17,7 +17,7 @@ Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server
 
 1) enters event like regular customer
 
-2) connects to wireless lan card (FlashAir™) network containing camera photos
+2) connects to wireless card network containing camera photos
 
 3) lists all photos and selects photos he wants to upload
 

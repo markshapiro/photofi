@@ -11,7 +11,7 @@ Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server
 
 2) enters event code textually or by scanning QR code
 
-3) 
+3) enters event feed that polls for photo updates, can share & save photos.
 
 #### Photographer flow: (more interesting)
 

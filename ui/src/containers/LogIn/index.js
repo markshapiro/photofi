@@ -69,19 +69,12 @@ export class LogIn extends Component {
   }
 
   fblogin(){
-
-    /*
     facebookConnectPlugin.login([], ({authResponse})=>{
-      this.props.login({fbid:authResponse.userID, accessToken:authResponse.accessToken});
+      this.props.fblogin({fbid:authResponse.userID, accessToken:authResponse.accessToken});
     }, ()=>{
       facebookConnectPlugin.logout(()=>{
         this.fblogin();
       });
-    });*/
-
-    return this.props.fblogin({
-      "fbid":"1079454755514036",
-      "accessToken":"aEAADq66AfGH0BAGxi4ZBgDcMmst04FGErOpXEHukZBDcdDlnMtzsC0sK24xlZBzJWZAWiJH4gh6uHZAzy9A8pk1cC7MHxKYGn67HFpdZAZBUZCOKsCeEBVqo93UpJKeTSIo0isBIltUS77Nrsnmtjj2J6Arpbkb1ZCEqFlmZBOIxflin8wBlj9zehNVcjsqZAaso6E8vrZC3VkZCB6juKqmwjpm3Xo"
     });
   }
 

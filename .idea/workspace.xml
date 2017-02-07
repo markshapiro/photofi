@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0bfe90e-00bb-439a-a89f-d1acfc1b91bf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/actions/auth.js" afterPath="$PROJECT_DIR$/ui/src/actions/auth.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/api/index.js" afterPath="$PROJECT_DIR$/ui/src/api/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/containers/LogIn/index.js" afterPath="$PROJECT_DIR$/ui/src/containers/LogIn/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/middleware/index.js" afterPath="$PROJECT_DIR$/ui/src/middleware/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/server/config/passport.js" afterPath="$PROJECT_DIR$/server/server/config/passport.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="photofi.iws" />
@@ -27,61 +26,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/server/models/user.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5555556">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="passport.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/server/config/passport.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.111111">
-              <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/containers/LogIn/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.6666665">
-              <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
+            <state vertical-scroll-proportion="-9.592592">
+              <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ui/src/middleware/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20467836">
-              <caret line="14" column="65" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/actions/auth.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="55" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/api/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.6666666">
-              <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.1754386">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -141,11 +100,11 @@
         <option value="$PROJECT_DIR$/server/server/routes/user.js" />
         <option value="$PROJECT_DIR$/server/server/models/user.js" />
         <option value="$PROJECT_DIR$/ui/src/containers/LogIn/style.less" />
-        <option value="$PROJECT_DIR$/ui/src/containers/LogIn/index.js" />
         <option value="$PROJECT_DIR$/ui/src/actions/auth.js" />
-        <option value="$PROJECT_DIR$/server/server/config/passport.js" />
-        <option value="$PROJECT_DIR$/ui/src/api/index.js" />
         <option value="$PROJECT_DIR$/ui/src/middleware/index.js" />
+        <option value="$PROJECT_DIR$/server/server/config/passport.js" />
+        <option value="$PROJECT_DIR$/ui/src/containers/LogIn/index.js" />
+        <option value="$PROJECT_DIR$/ui/src/api/index.js" />
       </list>
     </option>
   </component>
@@ -611,7 +570,19 @@
       <option name="project" value="LOCAL" />
       <updated>1486422139169</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fb login fix with unauthorized">
+      <created>1486422772369</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1486422772369</updated>
+    </task>
+    <task id="LOCAL-00010" summary="last fix with fb passport">
+      <created>1486423783454</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1486423783454</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -657,7 +628,9 @@
     <MESSAGE value="logo img working" />
     <MESSAGE value="bind logo" />
     <MESSAGE value="fb login finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="fb login finished" />
+    <MESSAGE value="fb login fix with unauthorized" />
+    <MESSAGE value="last fix with fb passport" />
+    <option name="LAST_COMMIT_MESSAGE" value="last fix with fb passport" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1005,10 +978,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/containers/LogIn/index.js">
+    <entry file="file://$PROJECT_DIR$/ui/src/middleware/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6666665">
-          <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.20467836">
+          <caret line="23" column="65" selection-start-line="23" selection-start-column="65" selection-end-line="23" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/actions/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2777778">
+          <caret line="31" column="55" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -1023,32 +1004,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/server/config/passport.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.111111">
-          <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
+        <state vertical-scroll-proportion="-1.7777778">
+          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/containers/LogIn/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.592592">
+          <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6666666">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/actions/auth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="55" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/middleware/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20467836">
-          <caret line="14" column="65" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.1754386">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>

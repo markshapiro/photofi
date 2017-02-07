@@ -22,9 +22,6 @@ export const apiErrorMiddleware = store => next => action => {
     const { error } = result.payload;
     const errName = error.response.data.name || error.response.data.code || error.response.data.result || error.response.data;
     const errorKey = result.type +"."+(errName+"").toUpperCase();
-
-    console.log(errorKey)
-
     if(errors[errorKey]){
       Popup.create({
         content: errors[errorKey],

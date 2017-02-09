@@ -92,8 +92,8 @@ function decodeBase64Image(dataString) {
 
 module.exports.uploadImage=function(req, res){
     var base64Data = req.body.data;
-    var imageBuffer = decodeBase64Image(base64Data);
-    var bufferStream = streamifier.createReadStream(imageBuffer.data);
+    var imageBuffer = decodeBase64Image(base64Data); // create buffer from base64 string
+    var bufferStream = streamifier.createReadStream(imageBuffer.data); //create stream from buffer
     bufferStream.path = '-';
     var uploadOptions = {
         photos: [{
@@ -108,6 +108,7 @@ module.exports.uploadImage=function(req, res){
             logger.error(err);
             return res.status(500).send(err);
         }
+        //fetch data of uploaded photo in order to create url
         nodeFlickr.get("photos.getInfo", {"photo_id":result[0]}, function(err, photoData){
             if(err || !(photoData && photoData.photo)) {
                 logger.error(err);
@@ -115,9 +116,9 @@ module.exports.uploadImage=function(req, res){
             }
             const url  = `https://farm${photoData.photo.farm}.static.flickr.com/${photoData.photo.server}/${photoData.photo.id}_${photoData.photo.secret}`;
             const dateupload = parseInt((new Date()).getTime()/10);
-            (new Photo({url, code:req.event.code, dateupload})).save()
+            (new Photo({url, code:req.event.code, dateupload})).save() //create photo in DB
                 .then(()=>{
-                    if(!req.event.starred){
+                    if(!req.event.starred){                             //if event has no starred photo, use this photo
                         req.event.starred = `${url}_h.jpg`;
                         return req.event.save()
                     }

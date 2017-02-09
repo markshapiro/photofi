@@ -111,10 +111,20 @@ export function checkIfHasEvent() {
     }
 }
 
+/**
+ * processes promises in chunk series (one chunk of promises after another)
+ * @param promises - list of promises as methods to call
+ * @param title - popup title
+ * @param endingTitle - final popup title
+ * @param endingMessage - final popup message
+ * @param numOfSimultaneous - num of promises to run simultaneously
+ * @param onPromiseSuccess - success callback for each promise
+ * @returns {*}
+ */
 function processSeries(promises, title, endingTitle, endingMessage, numOfSimultaneous, onPromiseSuccess){
     var results = [];
-    var updater={setListener:function(update){this.update=update;}};
-    var popupId = Popup.create({
+    var updater={setListener:function(update){this.update=update;}};    //popup progress updater
+    var popupId = Popup.create({    //show popup that displays progress
         title,
         content: <ProgressBar updater={updater}></ProgressBar>,
         buttons: {right: [{
@@ -126,15 +136,17 @@ function processSeries(promises, title, endingTitle, endingMessage, numOfSimulta
     var promises2reduce = promises.map((prom, i)=>()=>prom()
             .then(value=>{
                 results.push({value});
+                //update popup progress
                 updater.update( Math.ceil((results.length/promises.length)*100));
                 onPromiseSuccess && onPromiseSuccess(i);
             })
             .catch(()=>{
                 results.push(null);
+                //update popup progress even if fail
                 updater.update( Math.ceil((results.length/promises.length)*100));
             })
     );
-    if(numOfSimultaneous>1){
+    if(numOfSimultaneous>1){    //create chunks of <numOfSimultaneous> promises
         var promisesRemade=[];
         for(var i=0;i<Math.ceil(promises2reduce.length/numOfSimultaneous);i++){
             var simultaneous = []
@@ -149,6 +161,7 @@ function processSeries(promises, title, endingTitle, endingMessage, numOfSimulta
     }
     return _.reduce(promises2reduce, Q.finally, null)
         .then(()=>{
+            //show final popup
             Popup.create({
                 title:endingTitle,
                 content: <div>{`Processed ${results.filter(x=>x).length} out of ${results.length}`} {endingMessage && <div>{endingMessage}</div>}</div>,

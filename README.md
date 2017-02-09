@@ -24,5 +24,7 @@ Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server
 4) selects his logo image to add under each photo
 
 5) photos are shrinked to reduce size, logo attached, and result is uploaded as Base64
+<br/>
 [`link to photo shrink code`](https://github.com/markshapiro/photofi/blob/master/ui/src/actions/events.js#L71)
+<br/>
 [`link to photo upload code`](https://github.com/markshapiro/photofi/blob/master/server/server/controllers/event.js#L93)

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Q from 'q';
 
-const apiPrefix = "http://api.photofi.co.il";
+//const apiPrefix = "http://api.photofi.co.il";
+const apiPrefix = "http://34.199.180.31";
 //const apiPrefix = "http://localhost:4000";
 
 const wlanPrefix = "http://flashair";

@@ -16,7 +16,7 @@ export const bindAllActionCreators = (actionCreators, dispatch) => {
 export const shrinkImage = (url, logo) => {
   var prom = Q.defer();
   var img = new Image();
-  const MAX_SIZE = 500;
+  const MAX_SIZE = 1536;
   img.setAttribute('crossOrigin', 'anonymous');
   img.onload = function () {
     var canvas = document.createElement('canvas'),
@@ -39,7 +39,7 @@ export const shrinkImage = (url, logo) => {
     if(logo){
       canvas.getContext('2d').drawImage(logo, width - logo.width, height - logo.height, logo.width, logo.height);
     }
-    prom.resolve(canvas.toDataURL("image/jpg", 0.8));
+    prom.resolve(canvas.toDataURL("image/jpeg", 0.8));
   };
   img.onerror = function () {
     prom.reject();

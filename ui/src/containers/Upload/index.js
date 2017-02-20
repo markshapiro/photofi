@@ -42,9 +42,9 @@ export class Upload extends Component {
             var image  = new Image();
             image.src    = event.target.result;
             image.onload = ()=>{
-                if(image.width>250 || image.width>250){
+                if(image.width>400 || image.width>400){
                     Popup.create({
-                        content: "Please select logo image smaller than 250 pixels in width or height",
+                        content: "Please select logo image smaller than 400 pixels in width or height",
                         buttons: {right: ['ok']}
                     });
                     return;

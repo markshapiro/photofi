@@ -59,10 +59,16 @@ export class LogIn extends Component {
               <i className="ion-social-facebook" />&nbsp;&nbsp;<span className="lbl">Facebook Login</span>
             </button>}
             {!this.state.intent &&
-              <div className="txtCentered signInLbl Regular" onClick={()=>this.setState({intent:'signin'})}>
-                <span className="lightGrey">Already have an account?</span>&nbsp;
-                <span className="darkGrey">Sign in!</span>
-              </div>}
+              <div>
+                <div className="txtCentered commonMargin signInLbl Regular" onClick={()=>this.setState({intent:'signin'})}>
+                  <span className="lightGrey">Already have an account?</span>&nbsp;
+                  <span className="darkGrey">Sign in!</span>
+                </div>
+                <div className="txtCentered commonMargin termsAndPolicy">
+                  <span className="Regular" onClick={()=>window.open('http://photofi.co.il/www/Terms.html', '_blank')}>Our Terms</span> & <span className="Regular" onClick={()=>window.open('http://photofi.co.il/www/privacy.html', '_blank')}>Privacy policy</span>
+                </div>
+              </div>
+            }
           </div>
         </div>
     )

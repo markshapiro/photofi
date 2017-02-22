@@ -20,7 +20,7 @@ var UserSchema = new Schema({
         unique:true,
         maxlength: 20,
         required: true,
-        validate: [value=>value.match(/^[a-z0-9]+$/g)]
+        validate: [value=>value.match(/^[a-zA-Z0-9]+$/g)]
     },
     "fbid": {
         type: String,

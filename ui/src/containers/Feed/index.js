@@ -111,7 +111,7 @@ export class Feed extends Component {
             ctx.canvas.height = img.height;
             canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
             var params = {
-                data: canvas.toDataURL("image/jpg", 1.0),
+                data: canvas.toDataURL("image/jpeg", 1.0),
                 prefix: 'myPrefix_', format: 'JPG', quality: 100, mediaScanner: true
             };
             window.imageSaver.saveBase64Image(params,

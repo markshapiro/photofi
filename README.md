@@ -1,4 +1,4 @@
-Mobile app to browse live photos of event (party, wedding, etc) and upload photos by connecting to special wireless card that fetches the photos from professional camera to mobile app.
+Mobile App to browse live photos of events and upload from personal camera device using wireless LAN card that fetches photos from device to mobile app.
 
 Can be downloaded at [`google play`](https://play.google.com/store/apps/details?id=com.photofi.app)
 and [`appstore`](https://itunes.apple.com/us/app/photofi/id1200587486?mt=8)

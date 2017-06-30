@@ -3,7 +3,7 @@ Mobile App to browse live photos of events (Parties, Weddings etc.) and upload f
 Can be downloaded at [`google play`](https://play.google.com/store/apps/details?id=com.photofi.app)
 and [`appstore`](https://itunes.apple.com/us/app/photofi/id1200587486?mt=8)
 
-Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server. (does not include cordova project)
+Built with React.js & Redux with Cordova for mobile, Node.js & MongoDB on server.
 
 #### Customer flow: (trivial)
 

@@ -1,30 +1,3 @@
-# Line endings: enforce LF in GitHub, convert to native on checkout.
-
-* text=auto
-*.dart text
-*.js text
-*.html text
-*.json text
-*.png binary
-*.jpg binary
-
-# Make GitHub ignore vendor libraries while computing language stats.
-# See https://github.com/github/linguist#overrides.
-
-/cde-polymer-designer.dart/lib/src/* linguist-vendored=true
-/ide/web/lib/templates/web/web_starter_kit/* linguist-vendored=true
-/ide/web/third_party/* linguist-vendored=true
-/paper/* linguist-vendored=true
-
-# Explicitly specify language for non-standard extensions used under
-# ide/web/lib/templates to make GitHub correctly count their language stats.
-
-*.css_ linguist-language=JavaScript
-*.dart_ linguist-language=JavaScript
-*.html_ linguist-language=JavaScript
-*.js_ linguist-language=JavaScript
-*.json_ linguist-language=JavaScript
-*.scss_ linguist-language=JavaScript
-*.svg_ linguist-language=JavaScript
-*.yaml_ linguist-language=JavaScript
-*.yml_ linguist-language=JavaScript
+* linguist-vendored
+*.js linguist-vendored=false
+*.less linguist-language=JavaScript

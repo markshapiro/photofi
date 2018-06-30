@@ -19,12 +19,12 @@
 # Explicitly specify language for non-standard extensions used under
 # ide/web/lib/templates to make GitHub correctly count their language stats.
 
-*.css_ linguist-language=CSS
-*.dart_ linguist-language=Dart
-*.html_ linguist-language=HTML
+*.css_ linguist-language=JavaScript
+*.dart_ linguist-language=JavaScript
+*.html_ linguist-language=JavaScript
 *.js_ linguist-language=JavaScript
-*.json_ linguist-language=JSON
-*.scss_ linguist-language=CSS
-*.svg_ linguist-language=SVG
-*.yaml_ linguist-language=YAML
-*.yml_ linguist-language=YAML
+*.json_ linguist-language=JavaScript
+*.scss_ linguist-language=JavaScript
+*.svg_ linguist-language=JavaScript
+*.yaml_ linguist-language=JavaScript
+*.yml_ linguist-language=JavaScript
